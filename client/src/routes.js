@@ -1,0 +1,38 @@
+import React from 'react'
+import { Redirect, Route, Switch } from 'react-router-dom'
+import { LinksPage } from './pages/LinksPage'
+import { DetailPage } from './pages/DetailPage'
+import { AuthPage } from './pages/AuthPage';
+import { NewExpense } from './pages/NewExpense';
+import { NewExpenseDetails } from './pages/NewExpenseDetails';
+
+export const useRoutes = isAuthenticated => {
+  if (isAuthenticated) {
+    return (
+      <Switch>
+        <Route path="/links" exact>
+          <LinksPage />
+        </Route>
+        <Route path="/create" exact>
+          <NewExpense/>
+        </Route>
+        <Route path="/new-expense-details" exact>
+          <NewExpenseDetails/>
+        </Route>
+        <Route path="/detail/:id">
+          <DetailPage/>
+        </Route>
+        <Redirect to="/create"/>
+      </Switch>
+    )
+  }
+
+  return (
+    <Switch>
+      <Route path="/" exact>
+        <AuthPage/>
+      </Route>
+      <Redirect to="/"/>
+    </Switch>
+  )
+}
