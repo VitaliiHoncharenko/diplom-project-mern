@@ -1,15 +1,19 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
+import { useHttp } from "../hooks/http.hook";
 
 export const NewExpenseDetails = () => {
-  const [name, setName] = useState('');
-  let [users, setUser] = useState(['']);
+  const [name, setName] = useState("");
+  let [users, setUser] = useState([""]);
+  const { token } = useContext(AuthContext);
+  const { loading, request } = useHttp();
 
   const changeHandler = (event, index) => {
     const values = [...users];
-    values[index] = event.target.value
+    values[index] = event.target.value;
 
     setUser(values);
-  }
+  };
 
   const addUser = (event) => {
     const values = [...users];
@@ -23,6 +27,15 @@ export const NewExpenseDetails = () => {
     setUser(values);
   };
 
+  const saveGroup = async () => {
+    try {
+      const data = await request("/api/group/update", "POST", { group: users }, {
+        Authorization: `Bearer ${ token }`,
+      });
+
+    } catch (e) {}
+  };
+
 
   return (
     <div className="row">
@@ -34,17 +47,17 @@ export const NewExpenseDetails = () => {
               <ul>
                 {
                   users.map((item, index) =>
-                    <li key={index}>
+                    <li key={ index }>
                       <label htmlFor="name">Добавить пользователя</label>
                       <input
                         placeholder="Введите имя"
                         type="text"
-                        className="waves-button-input"
-                        value={item}
-                        onChange={e => changeHandler(e, index)}
+                        className="waves-button-input white-text"
+                        value={ item }
+                        onChange={ e => changeHandler(e, index) }
                       />
-                      {index !== 0 && <a href="#" onClick={() => removeUser(index)}>X</a>}
-                    </li>
+                      { index !== 0 && <a href="#" onClick={ () => removeUser(index) }>X</a> }
+                    </li>,
                   )
                 }
               </ul>
@@ -53,13 +66,19 @@ export const NewExpenseDetails = () => {
           <div className="card-action">
             <button
               className="btn black darken-4"
-              onClick={e => addUser(e)}
+              onClick={ e => addUser(e) }
             >
               Добавить
+            </button>
+            <button
+              className="btn green darken-1"
+              onClick={ saveGroup }
+            >
+              Сохранить
             </button>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
