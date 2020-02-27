@@ -5,6 +5,8 @@ const schema = new Schema({
   password: {type: String, required: true},
   // links: [{ type: Types.ObjectId, ref: 'Link' }],
   name: {type: String},
+  journey: { type: Types.ObjectId, ref: 'Journey' },
+  expense: [{ type: Types.ObjectId, ref: 'Expense' }],
 });
 
 module.exports = model('User', schema);

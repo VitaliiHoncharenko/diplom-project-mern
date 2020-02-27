@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 const {check, validationResult} = require('express-validator')
 const User = require('../models/User')
 const router = Router()
-
+const auth = require("../middleware/auth.middleware");
 
 // /api/auth/register
 router.post(
@@ -90,6 +90,22 @@ router.post(
     res.status(500).json({ message: 'Что-то пошло не так, попробуйте снова' })
   }
 })
+
+// /api/auth/name/update
+router.post("/name/update", auth, async (req, res) => {
+  try {
+
+    const { name } = req.body;
+
+    const links = await User.findOneAndUpdate({ _id: req.user.userId }, { name });
+
+    res.status(201).json({ message: "Имя добавлено" });
+  } catch (e) {
+    res.status(500).json({ message: "Что-то пошло не так, попробуйте снова" });
+  }
+
+});
+
 
 
 module.exports = router

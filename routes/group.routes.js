@@ -5,20 +5,6 @@ const auth = require("../middleware/auth.middleware");
 const router = Router();
 const { check, validationResult } = require("express-validator");
 
-// /api/group/create
-router.post("/create", auth, async (req, res) => {
-  try {
-
-    const { name } = req.body;
-    const userName = new Group({ name });
-    await userName.save();
-
-    res.status(201).json({ message: "Имя добавлено" });
-  } catch (e) {
-    res.status(500).json({ message: "Что-то пошло не так, попробуйте снова" });
-  }
-});
-
 router.post("/update", auth, async (req, res) => {
   try {
 

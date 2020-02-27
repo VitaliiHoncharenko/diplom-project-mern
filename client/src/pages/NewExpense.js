@@ -13,11 +13,11 @@ export const NewExpense = () => {
 
   const onHandler = async event => {
     try {
-      const data = await request('/api/group/create', 'POST', { name }, {
+      const data = await request('/api/auth/name/update', 'POST', { name }, {
         Authorization: `Bearer ${token}`
       });
 
-      history.push(`/new-expense-details`)
+      // history.push(`/new-expense-details`)
     } catch (e) {}
   };
 
