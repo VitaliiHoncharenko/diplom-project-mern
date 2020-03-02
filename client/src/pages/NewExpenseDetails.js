@@ -39,7 +39,7 @@ export const NewExpenseDetails = () => {
 
   return (
     <div className="row">
-      <div className="col s6 offset-s3">
+      <div className="col s12">
         <div className="card brown darken-2">
           <div className="card-content white-text">
             <span className="card-title">Здесь мы добавим всех участников между которыми делим средства</span>

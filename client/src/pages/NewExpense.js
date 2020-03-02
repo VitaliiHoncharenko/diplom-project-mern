@@ -2,35 +2,32 @@ import React, { useContext, useState } from 'react'
 import { useHttp } from '../hooks/http.hook'
 import { AuthContext } from '../context/AuthContext'
 import { useMessage } from '../hooks/message.hook'
-import { useHistory } from "react-router-dom";
 
 export const NewExpense = () => {
-  const [name, setName] = useState('');
+  const [expense, setExpense] = useState([]);
   const {loading, request} = useHttp();
   const {token} = useContext(AuthContext)
   const {message} = useMessage();
-  const history = useHistory();
 
   const onHandler = async event => {
     try {
-      const data = await request('/api/auth/name/update', 'POST', { name }, {
+      const data = await request('/api/expense/create', 'POST', { expense }, {
         Authorization: `Bearer ${token}`
       });
 
-      // history.push(`/new-expense-details`)
     } catch (e) {}
   };
 
   return (
     <div>
-      <h1>Введите Ваше имя</h1>
+      <h1>Введите название новой оплаты:</h1>
       <div className="input-field">
         <input
-          placeholder="Введите имя"
+          placeholder="Введите название оплаты"
           id="link"
           type="text"
-          value={name}
-          onChange={e => setName(e.target.value)}
+          value={expense}
+          onChange={e => setExpense(e.target.value)}
         />
       </div>
       <a href="#" className="btn-large" onClick={onHandler}>Сохранить</a>
