@@ -29,7 +29,7 @@ export const NewExpenseDetails = () => {
 
   const saveGroup = async () => {
     try {
-      const data = await request("/api/group/update", "POST", { group: users }, {
+      const data = await request("/api/journey/users/add", "POST", { users }, {
         Authorization: `Bearer ${ token }`,
       });
 

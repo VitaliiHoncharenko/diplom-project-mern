@@ -1,8 +1,8 @@
 const {Schema, model, Types} = require('mongoose');
 
 const schema = new Schema({
-  email: {type: String, required: true, unique: true},
-  password: {type: String, required: true},
+  email: {type: String, unique: true},
+  password: {type: String},
   // links: [{ type: Types.ObjectId, ref: 'Link' }],
   name: {type: String},
   journey: { type: Types.ObjectId, ref: 'Journey' },

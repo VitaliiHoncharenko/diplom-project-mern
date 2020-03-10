@@ -50,7 +50,7 @@ router.post(
 router.post(
   '/login',
   [
-    check('email', 'Введите корректный email').normalizeEmail().isEmail(),
+    check('email', 'Введите корректный email').isEmail(),
     check('password', 'Введите пароль').exists()
   ],
   async (req, res) => {
@@ -97,7 +97,7 @@ router.post("/name/update", auth, async (req, res) => {
 
     const { name } = req.body;
 
-    const links = await User.findOneAndUpdate({ _id: req.user.userId }, { name });
+    await User.findOneAndUpdate({ _id: req.user.userId }, { name });
 
     res.status(201).json({ message: "Имя добавлено" });
   } catch (e) {
