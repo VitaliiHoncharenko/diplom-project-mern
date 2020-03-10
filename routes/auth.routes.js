@@ -57,6 +57,9 @@ router.post(
     try {
       const errors = validationResult(req);
 
+      console.log('errors' , errors)
+
+
       if (!errors.isEmpty()) {
         return res.status(400).json({
           errors: errors.array(),
@@ -78,7 +81,7 @@ router.post(
         return res.status(400).json({ message: "Неверный пароль, попробуйте снова" });
       }
 
-      const token = jwt.sign({ userId: user.id }, config.get("jwtSecret"), { expiresIn: "1d" });
+      const token = jwt.sign({ userId: user.id }, config.get("jwtSecret"), { expiresIn: 10 });
 
       res.json({ token, userId: user.id });
 
@@ -88,16 +91,16 @@ router.post(
   });
 
 // /api/auth/name/update
-router.post("/name/update", [
-    check("name", "Введите имя").exists(),
-  ], auth, async (req, res) => {
+router.post("/name/update", [auth, check("name", "Минимальная длина имени 2 символа").isLength({ min: 2 }) ], async (req, res) => {
   try {
     const errors = validationResult(req);
+    console.log('errors', errors)
+
 
     if (!errors.isEmpty()) {
       return res.status(400).json({
         errors: errors.array(),
-        message: "Введите корректное имя",
+        message: "Некорректное имя",
       });
     }
 
@@ -111,6 +114,5 @@ router.post("/name/update", [
   }
 
 });
-
 
 module.exports = router;
