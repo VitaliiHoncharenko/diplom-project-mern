@@ -7,6 +7,6 @@ const schema = new Schema({
   name: {type: String},
   journey: { type: Types.ObjectId, ref: 'Journey' },
   expense: [{ type: Types.ObjectId, ref: 'Expense' }],
-});
+}, { versionKey: false });
 
 module.exports = model('User', schema);

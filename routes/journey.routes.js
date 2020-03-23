@@ -35,6 +35,12 @@ router.post("/users/add",
 
     for(let i = 0; i < users.length; i++) {
 
+      const userName = await User.findOne({ name: users[i] });
+
+      if (userName !== null) {
+        return res.status(400).json({ message: `Имя '${userName.name}' уже существует` });
+      }
+
       if (users[i].length <= 1) {
         return res.status(400).json({ message: "Имена некорректные" });
       }
@@ -43,7 +49,9 @@ router.post("/users/add",
         return res.status(400).json({ message: "Имена не должны дублироваться" });
       }
 
-      const currentUser = new User({ name: users[i], journey});
+      const currentUser = new User({ name: users[i], journey });
+      currentUser.email = `${currentUser._id}@owlyou.com`;
+
       await currentUser.save();
     }
 

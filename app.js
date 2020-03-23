@@ -8,11 +8,12 @@ const app = express();
 app.use(express.json({extended: true}));
 
 app.use("/api/auth", require("./routes/auth.routes"));
-app.use("/api/link", require("./routes/link.routes"));
-app.use("/api/group", require("./routes/group.routes"));
+// app.use("/api/link", require("./routes/link.routes"));
+app.use("/api/users", require("./routes/users.routes"));
+// app.use("/api/group", require("./routes/group.routes"));
 app.use("/api/journey", require("./routes/journey.routes"));
 app.use("/api/expense", require("./routes/expense.routes"));
-app.use("/t", require("./routes/redirect.routes"));
+// app.use("/t", require("./routes/redirect.routes"));
 
 if (process.env.NODE_ENV === "production") {
   app.use("/", express.static(path.join(__dirname, "client", "build")));

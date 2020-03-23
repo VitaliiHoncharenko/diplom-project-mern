@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useHttp } from '../hooks/http.hook'
 import { AuthContext } from '../context/AuthContext'
 import { useMessage } from '../hooks/message.hook'
@@ -6,9 +6,24 @@ import { useMessage } from '../hooks/message.hook'
 export const NewExpense = () => {
   const [title, setTitle] = useState('');
   const [amount, setAmount] = useState('');
+  const [users, setUsers] = useState('');
   const {loading, request} = useHttp();
   const {token} = useContext(AuthContext)
   const {message} = useMessage();
+
+  const getUsers = useCallback(async () => {
+    try {
+      const fetched = await request('/api/users', 'GET', null, {
+        Authorization: `Bearer ${token}`
+      })
+      setUsers(fetched)
+
+    } catch (e) {}
+  }, [token, request])
+
+  useEffect(() => {
+    getUsers()
+  }, [getUsers])
 
   const onHandler = async event => {
     try {
@@ -16,7 +31,9 @@ export const NewExpense = () => {
         Authorization: `Bearer ${token}`
       });
 
-    } catch (e) {}
+    } catch (e) {
+      console.log(e)
+    }
   };
 
   return (
@@ -40,6 +57,16 @@ export const NewExpense = () => {
           onChange={e => setAmount(e.target.value)}
         />
       </div>
+
+
+
+
+
+
+
+
+
+
       <a href="#" className="btn-large" onClick={onHandler}>Сохранить</a>
     </div>
   )

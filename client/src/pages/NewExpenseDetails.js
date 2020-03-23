@@ -1,12 +1,28 @@
-import React, { useContext, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useHttp } from "../hooks/http.hook";
+import { Loader } from "../components/Loader";
 
 export const NewExpenseDetails = () => {
   const [name, setName] = useState("");
   let [users, setUser] = useState([""]);
+  let [currentUser, setCurrentUser] = useState('');
   const { token } = useContext(AuthContext);
   const { loading, request } = useHttp();
+
+  const getUsername = useCallback(async () => {
+    try {
+      const fetched = await request('/api/users/author', 'GET', null, {
+        Authorization: `Bearer ${token}`
+      })
+      setCurrentUser(fetched)
+
+    } catch (e) {}
+  }, [token, request])
+
+  useEffect(() => {
+    getUsername()
+  }, [getUsername])
 
   const changeHandler = (event, index) => {
     const values = [...users];
@@ -36,6 +52,9 @@ export const NewExpenseDetails = () => {
     } catch (e) {}
   };
 
+  if (loading) {
+    return <Loader/>
+  }
 
   return (
     <div className="row">
@@ -44,6 +63,7 @@ export const NewExpenseDetails = () => {
           <div className="card-content white-text">
             <span className="card-title">Здесь мы добавим всех участников между которыми делим средства</span>
             <div>
+              <div className="waves-button-input white-text">{currentUser} (автор группы)</div>
               <ul>
                 {
                   users.map((item, index) =>

@@ -81,7 +81,7 @@ router.post(
         return res.status(400).json({ message: "Неверный пароль, попробуйте снова" });
       }
 
-      const token = jwt.sign({ userId: user.id }, config.get("jwtSecret"), { expiresIn: 10 });
+      const token = jwt.sign({ userId: user.id }, config.get("jwtSecret"), { expiresIn: '1d' });
 
       res.json({ token, userId: user.id });
 
@@ -110,7 +110,7 @@ router.post("/name/update", [auth, check("name", "Минимальная дли�
 
     res.status(201).json({ message: "Имя добавлено" });
   } catch (e) {
-    res.status(500).json({ message: "Что-то пошло не так, попробуйте снова" });
+    res.status(500).json({ message: e });
   }
 
 });
