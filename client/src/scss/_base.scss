@@ -1,0 +1,49 @@
+//@import "~materialize-css/dist/css/materialize.min.css";
+//
+//
+//input.yellow-input {
+//  border-bottom: 1px solid #fff!important;
+//  box-shadow: 0 1px 0 0 #fff!important;
+//}
+//
+//input.yellow-input + label {
+//  color: #ffffff!important;
+//}
+//
+//input.yellow-input:focus + label {
+//  color: #ffeb3b!important;
+//}
+//
+//input.yellow-input:focus {
+//  border-bottom: 1px solid #ffeb3b!important;
+//  box-shadow: 0 1px 0 0 #ffeb3b!important;
+//}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  //overflow-x: hidden;
+}
+
+html {
+  background-color: #9fb6c6;
+
+  font-size: 16px;
+  scroll-behavior: smooth;
+  text-size-adjust: 100%;
+}
+
+body {
+  color: #050518;
+  font-family: 'Arial', 'Helvetica', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #9fb6c6 url('../img/main-bg.jpg') no-repeat fixed 40% 0;
+  background-size: cover;
+}
+
+input {
+  font-size: 16px;
+  color: #050518;
+}

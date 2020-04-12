@@ -1,0 +1,24 @@
+.auth-page {
+  height: 100%;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
+  &__title {
+    text-align: center;
+    font-size: 51px;
+    color: #e0d4a7;
+    text-shadow: 1px 1px 0 rgb(140, 138, 102);
+    position: absolute;
+    top: 15%;
+  }
+
+  &__form {
+    margin: 0 auto;
+  }
+}

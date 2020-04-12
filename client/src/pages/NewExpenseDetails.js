@@ -2,10 +2,12 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useHttp } from "../hooks/http.hook";
 import { Loader } from "../components/Loader";
+import { useMessage } from "../hooks/message.hook";
 
 export const NewExpenseDetails = () => {
-  const [name, setName] = useState("");
   let [users, setUser] = useState([""]);
+  const message = useMessage();
+
   let [currentUser, setCurrentUser] = useState('');
   const { token } = useContext(AuthContext);
   const { loading, request } = useHttp();
@@ -14,15 +16,15 @@ export const NewExpenseDetails = () => {
     try {
       const fetched = await request('/api/users/author', 'GET', null, {
         Authorization: `Bearer ${token}`
-      })
-      setCurrentUser(fetched)
+      });
+      setCurrentUser(fetched);
 
     } catch (e) {}
-  }, [token, request])
+  }, [token, request]);
 
   useEffect(() => {
-    getUsername()
-  }, [getUsername])
+    getUsername();
+  }, [getUsername]);
 
   const changeHandler = (event, index) => {
     const values = [...users];
@@ -32,9 +34,10 @@ export const NewExpenseDetails = () => {
   };
 
   const addUser = (event) => {
-    const values = [...users];
-    values.push(event.target.value);
-    setUser(values);
+    // const values = [...users];
+    // values.push(event.target.value);
+    // setUser(values);
+    setUser([...users, event.target.value]);
   };
 
   const removeUser = (index) => {
@@ -46,14 +49,18 @@ export const NewExpenseDetails = () => {
   const saveGroup = async () => {
     try {
       const data = await request("/api/journey/users/add", "POST", { users }, {
-        Authorization: `Bearer ${ token }`,
+        Authorization: `Bearer ${token}`,
       });
 
-    } catch (e) {}
+      message(data.message);
+
+    } catch (e) {
+      message(e.message);
+    }
   };
 
   if (loading) {
-    return <Loader/>
+    return <Loader/>;
   }
 
   return (
@@ -67,16 +74,16 @@ export const NewExpenseDetails = () => {
               <ul>
                 {
                   users.map((item, index) =>
-                    <li key={ index }>
+                    <li key={index}>
                       <label htmlFor="name">Добавить пользователя</label>
                       <input
                         placeholder="Введите имя"
                         type="text"
                         className="waves-button-input white-text"
-                        value={ item }
-                        onChange={ e => changeHandler(e, index) }
+                        value={item}
+                        onChange={e => changeHandler(e, index)}
                       />
-                      { index !== 0 && <a href="#" onClick={ () => removeUser(index) }>X</a> }
+                      {index !== 0 && <a href="#" onClick={() => removeUser(index)}>X</a>}
                     </li>,
                   )
                 }
@@ -86,13 +93,13 @@ export const NewExpenseDetails = () => {
           <div className="card-action">
             <button
               className="btn black darken-4"
-              onClick={ e => addUser(e) }
+              onClick={e => addUser(e)}
             >
               Добавить
             </button>
             <button
               className="btn green darken-1"
-              onClick={ saveGroup }
+              onClick={saveGroup}
             >
               Сохранить
             </button>

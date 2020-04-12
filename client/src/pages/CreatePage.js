@@ -9,10 +9,6 @@ export const CreatePage = () => {
   const {request} = useHttp()
   const [link, setLink] = useState('')
 
-  useEffect(() => {
-    window.M.updateTextFields()
-  }, [])
-
   const pressHandler = async event => {
     if (event.key === 'Enter') {
       try {

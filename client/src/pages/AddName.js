@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHttp } from '../hooks/http.hook';
 import { AuthContext } from '../context/AuthContext';
 import { useMessage } from '../hooks/message.hook';
@@ -6,9 +6,9 @@ import { useHistory } from "react-router-dom";
 
 export const AddName = () => {
   const [name, setName] = useState('');
-  const { loading, request } = useHttp();
+  const { loading, request} = useHttp();
   const { token } = useContext(AuthContext);
-  const { message } = useMessage();
+  const message = useMessage();
   const history = useHistory();
 
   const onHandler = async event => {
@@ -17,8 +17,11 @@ export const AddName = () => {
         Authorization: `Bearer ${token}`
       });
 
+      message(data.message);
+
       // history.push(`/new-expense-details`)
     } catch (e) {
+      message(e.message);
     }
   };
 

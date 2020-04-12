@@ -1,0 +1,22 @@
+.notification {
+  font-size: 15px;
+  background: black;
+  margin: 8px;
+
+  &__content {
+    padding: 10px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  &.Toastify__toast--error {
+    background: rgba(224, 49, 20, 0.5);
+  }
+
+  &.Toastify__toast--info {
+    background: rgba(224, 212, 167, 0.6);
+    color: #fff;
+    font-weight: 600;
+  }
+}

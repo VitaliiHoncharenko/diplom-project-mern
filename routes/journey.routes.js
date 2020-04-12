@@ -3,11 +3,22 @@ const config = require("config");
 const Journey = require("../models/Journey");
 const User = require('../models/User');
 const auth = require("../middleware/auth.middleware");
+const { check, validationResult } = require("express-validator");
 const router = Router();
 
 //api/journey/create
-router.post("/create", auth, async (req, res) => {
+router.post("/create", [auth, check("title", "Минимальная длина названия поездки -  5 символов").isLength({ min: 2 })], async (req, res) => {
   try {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array(),
+        message: "Минимальная длина названия поездки -  5 символов",
+      });
+    }
+
+
 
     const { title } = req.body;
 

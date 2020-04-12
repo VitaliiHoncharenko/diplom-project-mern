@@ -5,10 +5,10 @@ import { useAuth } from './hooks/auth.hook';
 import { AuthContext } from './context/AuthContext';
 import { Navbar } from './components/Navbar';
 import { Loader } from './components/Loader';
-import 'materialize-css';
+import { ToastContainer, toast } from 'react-toastify';
 
 function App() {
-  const { token, login, logout, userId, ready } = useAuth();
+  const { token, login, logout, userId, ready, userName } = useAuth();
   const isAuthenticated = !!token;
   const routes = useRoutes(isAuthenticated);
 
@@ -17,16 +17,19 @@ function App() {
   }
 
   return (
-    <AuthContext.Provider value={{
-      token, login, logout, userId, isAuthenticated
-    }}>
-      <Router>
-        {isAuthenticated && <Navbar/>}
-        <div className="container">
-          {routes}
-        </div>
-      </Router>
-    </AuthContext.Provider>
+    <>
+      <AuthContext.Provider value={{
+        token, login, logout, userId, isAuthenticated, userName,
+      }}>
+        <Router>
+            {isAuthenticated && <Navbar/>}
+            <div className="app__body">
+              {routes}
+            </div>
+        </Router>
+      </AuthContext.Provider>
+      <ToastContainer hideProgressBar/>
+    </>
   );
 }
 

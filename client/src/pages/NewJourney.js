@@ -1,15 +1,15 @@
 import React, { useContext, useState } from 'react';
 import { useHttp } from '../hooks/http.hook';
 import { AuthContext } from '../context/AuthContext';
-import { useMessage } from '../hooks/message.hook';
+import { useMessage } from "../hooks/message.hook";
 import { useHistory } from "react-router-dom";
 
 export const NewJourney = () => {
   const [title, setTitle] = useState('');
   const { request } = useHttp();
   const { token } = useContext(AuthContext);
-  const { message } = useMessage();
-  const history = useHistory();
+  const message = useMessage();
+  // const history = useHistory();
 
   const onHandler = async event => {
     try {
@@ -18,8 +18,9 @@ export const NewJourney = () => {
       });
 
       // history.push(`/new-expense-details`)
+      message(data.message);
     } catch (e) {
-      console.log('!!!!!!')
+      message(e.message);
     }
   };
 

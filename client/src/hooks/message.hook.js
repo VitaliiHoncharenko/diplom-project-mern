@@ -1,9 +1,16 @@
 import {useCallback} from 'react'
+import { ToastContainer, toast } from 'react-toastify';
 
 export const useMessage = () => {
-  return useCallback(text => {
-    if (window.M && text) {
-      window.M.toast({ html: text })
+  let toastId = null;
+
+  return useCallback((text, status='info') => {
+    if (! toast.isActive(toastId) && text) {
+      toastId = toast[status](text,{
+        className: 'notification',
+        bodyClassName: "notification__content",
+        progressClassName: 'notification__progressbar'
+      });
     }
   }, [])
 }

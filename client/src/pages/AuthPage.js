@@ -12,13 +12,9 @@ export const AuthPage = () => {
   });
 
   useEffect(() => {
-    message(error);
+    message(error, 'error');
     clearError();
   }, [error, message, clearError]);
-
-  useEffect(() => {
-    window.M.updateTextFields();
-  }, []);
 
   const changeHandler = event => {
     setForm({ ...form, [event.target.name]: event.target.value });
@@ -41,60 +37,56 @@ export const AuthPage = () => {
   };
 
   return (
-    <div className="row">
-      <div className="col s6 offset-s3">
-        <h1>I OWE YOU</h1>
-        <div className="card blue darken-1">
-          <div className="card-content white-text">
-            <span className="card-title">Авторизация</span>
-            <div>
-
-              <div className="input-field">
-                <input
-                  placeholder="Введите email"
-                  id="email"
-                  type="text"
-                  name="email"
-                  className="yellow-input"
-                  value={ form.email }
-                  onChange={ changeHandler }
-                />
-                <label htmlFor="email">Email</label>
-              </div>
-
-              <div className="input-field">
-                <input
-                  placeholder="Введите пароль"
-                  id="password"
-                  type="password"
-                  name="password"
-                  className="yellow-input"
-                  value={ form.password }
-                  onChange={ changeHandler }
-                />
-                <label htmlFor="email">Пароль</label>
-              </div>
-
+    <div className="auth-page">
+      <div className="auth-page__content">
+        <h1 className="auth-page__title">I OWE YOU</h1>
+        <form className="form auth-page__form" noValidate autoComplete="off">
+          <div className="form__title">Авторизация</div>
+          <div className="form__group">
+            <div className="form__row">
+              <input
+                placeholder=" "
+                autoComplete="off"
+                id="email"
+                type="email"
+                name="email"
+                className="form__input"
+                value={ form.email }
+                onChange={ changeHandler }
+              />
+              <label htmlFor="email" className="form__label">Email</label>
+            </div>
+            <div className="form__row">
+              <input
+                placeholder=" "
+                autoComplete="new-password"
+                id="password"
+                type="password"
+                name="password"
+                className="form__input"
+                value={ form.password }
+                onChange={ changeHandler }
+              />
+              <label htmlFor="email" className="form__label">Пароль</label>
+            </div>
+            <div className="form__row">
+              <button
+                className="btn form__btn"
+                disabled={ loading }
+                onClick={ loginHandler }
+              >
+                Войти
+              </button>
+              <button
+                className="btn form__btn"
+                onClick={ registerHandler }
+                disabled={ loading }
+              >
+                Регистрация
+              </button>
             </div>
           </div>
-          <div className="card-action">
-            <button
-              className="btn yellow darken-4"
-              style={ { marginRight: 10 } }
-              disabled={ loading }
-              onClick={ loginHandler }
-            >
-              Войти
-            </button>
-            <button
-              className="btn grey lighten-1 black-text"
-              onClick={ registerHandler }
-              disabled={ loading }
-            >
-              Регистрация
-            </button>
-          </div>
-        </div>
+        </form>
       </div>
     </div>
   );
