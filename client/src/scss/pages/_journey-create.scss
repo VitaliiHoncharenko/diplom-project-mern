@@ -1,4 +1,4 @@
-.auth-page {
+.journey-create {
   height: 100%;
 
   &__content {
@@ -7,16 +7,15 @@
     justify-content: center;
     align-items: center;
     height: 100%;
-    transform: translateY(-5%);
   }
 
   &__title {
     font-family: "Pacifico Regular", 'Arial', serif;
     text-align: center;
-    font-size: 51px;
+    font-size: 40px;
     color: #71c9ce;
     text-shadow: 1px 1px 0 rgb(140, 138, 102);
-    margin-bottom: 20px;
+    padding: 0 20px;
   }
 
   &__form {

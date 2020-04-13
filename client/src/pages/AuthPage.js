@@ -69,21 +69,25 @@ export const AuthPage = () => {
               />
               <label htmlFor="email" className="form__label">Пароль</label>
             </div>
-            <div className="form__row">
-              <button
-                className="btn form__btn"
-                disabled={ loading }
-                onClick={ loginHandler }
-              >
-                Войти
-              </button>
-              <button
-                className="btn form__btn"
-                onClick={ registerHandler }
-                disabled={ loading }
-              >
-                Регистрация
-              </button>
+            <div className="form__btn-group">
+              <div className="form__btn-row">
+                <button
+                  className="btn form__btn"
+                  disabled={ loading }
+                  onClick={ loginHandler }
+                >
+                  Войти
+                </button>
+              </div>
+              <div className="form__btn-row">
+                <button
+                  className="btn form__btn"
+                  onClick={ registerHandler }
+                  disabled={ loading }
+                >
+                  Регистрация
+                </button>
+              </div>
             </div>
           </div>
         </form>

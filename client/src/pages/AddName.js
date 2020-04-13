@@ -17,27 +17,35 @@ export const AddName = () => {
         Authorization: `Bearer ${token}`
       });
 
-      message(data.message);
+      message(data.message, 'info');
 
-      // history.push(`/new-expense-details`)
+      history.push(`/journey`)
     } catch (e) {
-      message(e.message);
+      message(e.message, 'error');
     }
   };
 
   return (
-    <div>
-      <h1>Введите Ваше имя</h1>
-      <div className="input-field">
-        <input
-          placeholder="Введите имя"
-          id="link"
-          type="text"
-          value={name}
-          onChange={e => setName(e.target.value)}
-        />
-      </div>
-      <a href="#" className="btn-large" onClick={onHandler}>Сохранить</a>
+    <div className="add-name">
+      <form noValidate className="form add-name__form">
+        <h1 className="form__title">Добавление имени</h1>
+
+        <div className="form__group">
+          <div className="form__row">
+            <input
+              className="form__input"
+              placeholder=" "
+              type="text"
+              value={name}
+              onChange={e => setName(e.target.value)}
+            />
+            <label className="form__label">
+              Введите имя
+            </label>
+          </div>
+        </div>
+        <a href="#" className="form__btn" onClick={onHandler}><span>Сохранить</span></a>
+      </form>
     </div>
   );
 };

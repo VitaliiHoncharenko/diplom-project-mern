@@ -1,0 +1,61 @@
+.journey-details {
+  height: 100%;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  &__title {
+    font-family: "Pacifico Regular", 'Arial', serif;
+    text-align: center;
+    font-size: 26px;
+    color: #71c9ce;
+    text-shadow: 1px 1px 0 rgb(140, 138, 102);
+    padding: 0 20px;
+    margin-bottom: 20px;
+  }
+
+  &__form {
+    margin: 0 auto;
+
+    .form__title {
+      text-align: left;
+      margin-bottom: 25px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #313131;
+    }
+  }
+
+  &__user {
+    padding: 10px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+
+    background-color: rgb(49, 49, 49);
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 5px -1px, rgba(0, 0, 0, 0.14) 0px 6px 10px 0px, rgba(0, 0, 0, 0.12) 0px 1px 18px 0px;
+    color: rgb(255, 255, 255);
+    pointer-events: initial;
+
+    & + & {
+      margin-top: 10px;
+    }
+  }
+
+  &__user-remove {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: rgba(241, 241, 241, 0.7);
+  }
+
+  ul {
+    list-style: none;
+    padding-left: 0;
+  }
+}

@@ -20,7 +20,7 @@ export const Navbar = () => {
           <li><NavLink to="/name">Добавить имя</NavLink></li>
           <li><NavLink to="/journey">Создать поездку</NavLink></li>
           <li><NavLink to="/expense">Создать оплату</NavLink></li>
-          <li><NavLink to="/expense/details">Создать детали поездки</NavLink></li>
+          <li><NavLink to="/journey/details">Создать детали поездки</NavLink></li>
           <li><a href="/" onClick={logoutHandler}>Выйти</a></li>
         </ul>
       </div>

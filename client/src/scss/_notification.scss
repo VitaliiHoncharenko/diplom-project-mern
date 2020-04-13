@@ -2,6 +2,7 @@
   font-size: 15px;
   background: black;
   margin: 8px;
+  font-weight: 600;
 
   &__content {
     padding: 10px;
@@ -11,12 +12,12 @@
   }
 
   &.Toastify__toast--error {
-    background: rgba(224, 49, 20, 0.5);
+    background: rgba(224, 49, 20, 0.8);
   }
 
   &.Toastify__toast--info {
-    background: rgba(224, 212, 167, 0.6);
+    background: rgba(224, 212, 167, 0.8);
     color: #fff;
-    font-weight: 600;
+    font-size: 16px;
   }
 }
