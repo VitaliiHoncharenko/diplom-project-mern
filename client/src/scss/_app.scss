@@ -23,5 +23,28 @@
     text-align: center;
     padding: 30% 0;
   }
+
+  &__modal {
+    position: absolute;
+    border: 1px solid rgb(204, 204, 204);
+    background: #a6e3e9;
+    overflow: auto;
+    border-radius: 4px;
+    outline: none;
+    padding: 20px;
+    margin-right: 0px;
+  }
 }
 
+.ReactModal__Content {
+  transform: translateY(100%);
+  transition: transform ease-out 500ms;
+}
+
+.ReactModal__Content--after-open {
+  transform: translateY(0%);
+}
+
+.ReactModal__Content--before-close {
+  transform: translateY(100%);
+}
