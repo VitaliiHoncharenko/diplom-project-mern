@@ -1,5 +1,5 @@
 .form {
-  width: 300px;
+  width: 100%;
   padding: 30px;
   border-radius: 10px;
   background: #a6e3e9;
@@ -64,7 +64,7 @@
 
   &__btn-row {
     & + & {
-      margin-top: 10px;
+      margin-top: 15px;
     }
   }
 
@@ -83,12 +83,16 @@
     position: relative;
     margin: 0 auto;
     border-radius: 50px;
-    box-shadow: 0 3px 0 0 #e9edee, 0 3px 0 2px #ccd2d2, 0 12px 20px 6px #d5dbdb;
+    box-shadow: 0 3px 0 0 #66b5b9, 0 3px 0 2px #ccd2d2, 0 12px 20px 6px #d5dbdb;
     text-align: center;
     font-size: 18px;
     -webkit-tap-highlight-color: rgba(black, 0);
 
     &--white {
+      background: #fff;
+      color: #313131;
+      box-shadow: 0 3px 0 0 #e9edee, 0 3px 0 2px #ccd2d2, 0 12px 20px 6px #d5dbdb;
+
       &:active {
         background-color: whitesmoke;
         color: rgba(49, 49, 49, 0.5);
@@ -110,7 +114,8 @@
     }
 
     &[disabled] {
-      background: #dadada;
+      background: #cecece;
+      box-shadow: 0 3px 0 0 #c1c0c0, 0 3px 0 2px #ccd2d2, 0 12px 20px 6px #d5dbdb;
     }
   }
 }

@@ -73,44 +73,56 @@ export const NewExpense = () => {
   };
 
   return (
-    <div>
-      <h1>Укажите название и сумму новой оплаты:</h1>
-      <div className="input-field">
-        <input
-          placeholder="Введите название оплаты"
-          id="link"
-          type="text"
-          value={title}
-          onChange={e => setTitle(e.target.value)}
-        />
-      </div>
-      <div className="input-field">
-        <input
-          placeholder="Введите сумму оплаты"
-          id="link"
-          type="text"
-          value={amount}
-          onChange={e => setAmount(e.target.value)}
-        />
-      </div>
+    <div className="expense-create">
+      <form className="expense-create__form form">
+        <div className="form__title" >Укажите название и сумму новой оплаты:</div>
+
+        <div className="form__group">
+          <div className="form__row">
+            <input
+              className="form__input"
+              placeholder=" "
+              type="text"
+              value={title}
+              onChange={e => setTitle(e.target.value)}
+            />
+            <label className="form__label">
+              Введите название оплаты
+            </label>
+          </div>
+          <div className="form__row">
+            <input
+              className="form__input"
+              placeholder=" "
+              type="text"
+              value={amount}
+              onChange={e => setAmount(e.target.value)}
+            />
+            <label className="form__label">
+              Введите сумму оплаты
+            </label>
+          </div>
+        </div>
 
 
-      <div>
-        <ul>
-          {
-          users.map((user) =>
-            <li key={user._id}>
-              {user.name}
-            </li>
-          )}
-        </ul>
+        <div>
+          <ul>
+            {
+            users.map((user) =>
+              <li key={user._id}>
+                {user.name}
+              </li>
+            )}
+          </ul>
 
 
-        Платил <span>{ author }</span> и разделить <span>Поровну </span>
-      </div>
+          Платил <span>{ author }</span> и разделить <span>Поровну </span>
+        </div>
 
-
-      <a href="#" className="btn-large" onClick={onHandler}>Сохранить</a>
+        <div className="form__btn-group">
+          <a href="#" className="form__btn" onClick={onHandler}>Сохранить</a>
+        </div>
+      </form>
     </div>
   );
 };

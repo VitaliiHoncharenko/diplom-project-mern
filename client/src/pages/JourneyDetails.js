@@ -7,18 +7,20 @@ import { useMessage } from "../hooks/message.hook";
 export const JourneyDetails = () => {
   let [users, setUsers] = useState([]);
   let [user, setUser] = useState('');
+  let [author, setAuthor] = useState('');
   const message = useMessage();
 
   const { token } = useContext(AuthContext);
   const { loading, request } = useHttp();
 
-  const getUsername = useCallback(async () => {
+  const getAuthor = useCallback(async () => {
     try {
       const fetched = await request('/api/users/author', 'GET', null, {
         Authorization: `Bearer ${token}`
       });
 
-      setUsers([...users, fetched]);
+      // setUsers([...users, fetched]);
+      setAuthor(fetched);
 
     } catch (e) {
       message(e.message, 'error');
@@ -26,8 +28,8 @@ export const JourneyDetails = () => {
   }, [token, request]);
 
   useEffect(() => {
-    getUsername();
-  }, [getUsername]);
+    getAuthor();
+  }, [getAuthor]);
 
   const changeHandler = (event, index) => {
     event.preventDefault();
@@ -36,6 +38,7 @@ export const JourneyDetails = () => {
 
   const addUser = (event) => {
     event.preventDefault();
+
     if (user.length <= 0) {
       message('Введите имя', 'error');
       return;
@@ -51,7 +54,9 @@ export const JourneyDetails = () => {
     setUsers(values);
   };
 
-  const saveGroup = async () => {
+  const saveGroup = async (e) => {
+    e.preventDefault();
+
     try {
       const data = await request("/api/journey/users/add", "POST", { users }, {
         Authorization: `Bearer ${token}`,
@@ -74,17 +79,19 @@ export const JourneyDetails = () => {
           <h1 className="journey-details__title">Добавление участников</h1>
           <form noValidate className="form journey-details__form">
             <div className="form__title">Здесь мы добавим всех участников между которыми делим средства</div>
-            <ul className="form__row">
+            <ul className="journey-details__user-list">
+              {author && <li className="journey-details__user">
+                <span>👑 { author }</span>
+              </li>}
               {
                 users.length > 0 && users.map((item, index) =>
                   <li key={index} className="journey-details__user">
                     <span className="journey-details__user-name">{ item }</span>
                     {
-                      index > 0
-                      && <a className="journey-details__user-remove"
-                            href="#"
-                            onClick={() => removeUser(index)}
-                          >✖︎</a>
+                      <a className="journey-details__user-remove"
+                         href="#"
+                         onClick={() => removeUser(index)}
+                      >✖︎</a>
                     }
                   </li>,
                 )
@@ -103,7 +110,7 @@ export const JourneyDetails = () => {
             <div className="form__btn-group">
               <div className="form__btn-row">
                 <button
-                  className="form__btn"
+                  className="form__btn form__btn--white "
                   onClick={e => addUser(e)}
                 >
                   Добавить
@@ -112,8 +119,8 @@ export const JourneyDetails = () => {
               <div className="form__btn-row">
                 <button
                   className="form__btn"
-                  onClick={saveGroup}
-                  disabled={users.length <= 1}
+                  onClick={e => saveGroup(e)}
+                  disabled={users.length <= 0}
                 >
                   Сохранить
                 </button>

@@ -18,8 +18,6 @@ router.post("/create", [auth, check("title", "Минимальная длина 
       });
     }
 
-
-
     const { title } = req.body;
 
     const journeyTitle = new Journey({ title });
@@ -42,6 +40,10 @@ router.post("/users/add",
   try {
     const { users } = req.body;
 
+    if (users.length <= 0) {
+      return res.status(400).json({ message: 'Добавьте имена пользователей в группе' });
+    }
+
     const { journey } = await User.findOne({ _id: req.user.userId });
 
     for(let i = 0; i < users.length; i++) {
@@ -61,7 +63,7 @@ router.post("/users/add",
       }
 
       const currentUser = new User({ name: users[i], journey });
-      currentUser.email = `${currentUser._id}@owlyou.com`;
+      currentUser.email = `${currentUser._id}@i-owe-you.com`;
 
       await currentUser.save();
     }
