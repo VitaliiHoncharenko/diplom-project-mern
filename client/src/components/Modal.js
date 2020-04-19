@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import ModalPanel from 'react-modal';
 
 const customStyles = {
@@ -11,21 +11,20 @@ const customStyles = {
   }
 };
 
-ModalPanel.setAppElement('#root')
+ModalPanel.setAppElement('#root');
 
 export const Modal = ({children, isOpen, onClose, onAfterOpen}) => {
 
   return (
     <ModalPanel
       isOpen={isOpen}
-      onAfterOpen={() => console.log('on after open')}
+      // onAfterOpen={() => console.log('on after open')}
       onRequestClose={onClose}
       style={customStyles}
       contentLabel="Example Modal"
       closeTimeoutMS={600}
-      className="app__modal"
-      // bodyOpenClassName={'body--modal-open'}
-      // htmlOpenClassName={'html--modal--open'}
+      className="app-modal"
+      bodyOpenClassName={'body--modal-open'}
     >
       { children }
     </ModalPanel>

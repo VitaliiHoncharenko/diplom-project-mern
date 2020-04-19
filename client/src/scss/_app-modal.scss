@@ -1,0 +1,20 @@
+.app-modal {
+  position: absolute;
+  background: #e3fdfd;
+  overflow: auto;
+  outline: none;
+  margin-right: 0px;
+}
+
+.ReactModal__Content {
+  transform: translateY(100%);
+  transition: transform ease-out 500ms;
+}
+
+.ReactModal__Content--after-open {
+  transform: translateY(0%);
+}
+
+.ReactModal__Content--before-close {
+  transform: translateY(100%);
+}

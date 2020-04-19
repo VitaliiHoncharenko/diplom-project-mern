@@ -1,6 +1,9 @@
 import React from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
-import { AnimatedSwitch } from 'react-router-transition';
+import {
+  TransitionGroup,
+  CSSTransition
+} from "react-transition-group";
 
 import { LinksPage } from './pages/LinksPage'
 import { DetailPage } from './pages/DetailPage'
@@ -13,29 +16,34 @@ import { JourneyDetails } from './pages/JourneyDetails';
 export const useRoutes = isAuthenticated => {
   if (isAuthenticated) {
     return (
-        <AnimatedSwitch
-          atEnter={{ opacity: 0 }}
-          atLeave={{ opacity: 0 }}
-          atActive={{ opacity: 1 }}
-          className="app__switcher"
-        >
-          <Route path="/name" exact>
-            <AddName/>
-          </Route>
-          <Route path="/journey" exact>
-            <NewJourney/>
-          </Route>
-          <Route path="/expense" exact>
-            <NewExpense/>
-          </Route>
-          <Route path="/journey/details" exact>
-            <JourneyDetails/>
-          </Route>
-          <Route path="/detail/:id">
-            <DetailPage/>
-          </Route>
-          <Redirect to="/name"/>
-        </AnimatedSwitch>
+      <Route render={({ location }) => (
+        <TransitionGroup className="app__switcher">
+          <CSSTransition
+            key={location.key}
+            classNames="app__page-"
+            timeout={300}
+          >
+          <Switch location={location}>
+            <Route path="/name" exact>
+              <AddName/>
+            </Route>
+            <Route path="/journey" exact>
+              <NewJourney/>
+            </Route>
+            <Route path="/expense" exact>
+              <NewExpense/>
+            </Route>
+            <Route path="/journey/details" exact>
+              <JourneyDetails/>
+            </Route>
+            <Route path="/detail/:id">
+              <DetailPage/>
+            </Route>
+            <Redirect to="/name"/>
+          </Switch>
+          </CSSTransition>
+        </TransitionGroup>
+      )}/>
     )
   }
 

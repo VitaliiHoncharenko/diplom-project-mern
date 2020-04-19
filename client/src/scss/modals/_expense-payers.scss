@@ -1,0 +1,83 @@
+.expense-payers {
+  &--multi {
+    .expense-payers {
+      &__show-multi-btn {
+        background: #cbf1f5;
+        font-family: 'Open Sans Semibold', 'Arial', sans-serif;
+        &:before {
+          content: '✓';
+          padding-left: 0;
+          padding-right: 6px;
+        }
+      }
+    }
+  }
+
+  &__header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+
+    position: relative;
+    background: #71c9ce;
+  }
+
+  &__title {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    padding: 0 10px;
+  }
+
+  &__btn {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 10px 15px;
+
+    &--close {
+      right: 0;
+      left: auto;
+
+      button {
+        font-size: 24px;
+      }
+    }
+
+    button {
+      font-family: 'Open Sans Semibold', 'Arial', sans-serif;
+    }
+  }
+
+  &__multiple-payers {
+    .expense-payers__item {
+      display: flex;
+      width: 100%;
+      padding: 10px;
+      border-bottom: 1px solid #71c9ce;
+      background: #e3fdfd;
+      position: relative;
+    }
+  }
+
+  &__show-multi-btn {
+    display: flex;
+    width: 100%;
+    padding: 10px;
+    border-width: 1px 0 1px 0;
+    border-style: solid;
+    border-color: #71c9ce;
+    background: #e3fdfd;
+    position: relative;
+    &:after {
+      content: '❯';
+      color: #71c9ce;
+      position: absolute;
+      right: 10px;
+    }
+  }
+}

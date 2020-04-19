@@ -1,7 +1,7 @@
 @font-face {
   font-family: "Pacifico Regular";
   font-style: normal;
-  font-weight: bold;
+  font-weight: normal;
   src: url("../fonts/Pacifico-Regular.woff") format("woff"),
        url("../fonts/Pacifico-Regular.woff2") format("woff2");
 }
@@ -9,15 +9,23 @@
 @font-face {
   font-family: "Open Sans Regular";
   font-style: normal;
-  font-weight: bold;
+  font-weight: normal;
   src: url("../fonts/OpenSans-Regular.woff") format("woff"),
   url("../fonts/OpenSans-Regular.woff2") format("woff2");
 }
 
 @font-face {
-  font-family: "Kurale Regular";
+  font-family: "Open Sans Semibold";
   font-style: normal;
   font-weight: bold;
+  src: url("../fonts/OpenSans-SemiBold.woff") format("woff"),
+  url("../fonts/OpenSans-SemiBold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Kurale Regular";
+  font-style: normal;
+  font-weight: normal;
   src: url("../fonts/Kurale-Regular.woff") format("woff"),
   url("../fonts/Kurale-Regular.woff2") format("woff2");
 }
@@ -49,4 +57,12 @@ body {
 input {
   font-size: 16px;
   color: #313131;
+}
+
+button {
+  font-family: 'Open Sans Regular', 'Arial', sans-serif;
+  padding: 0;
+  background: none;
+  border-width: 0;
+  font-size: 14px;
 }

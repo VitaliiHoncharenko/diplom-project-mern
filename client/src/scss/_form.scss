@@ -8,8 +8,8 @@
     text-align: center;
     margin-bottom: 25px;
     font-size: 22px;
-    font-weight: 600;
     color: #313131;
+    font-weight: normal;
   }
 
   &__group {
@@ -77,7 +77,6 @@
     outline: none;
     transition: 0.3s;
     color: #fff;
-    font-weight: 600;
     text-decoration: none;
     user-select: none;
     position: relative;
@@ -87,6 +86,7 @@
     text-align: center;
     font-size: 18px;
     -webkit-tap-highlight-color: rgba(black, 0);
+    line-height: normal;
 
     &--white {
       background: #fff;
@@ -116,6 +116,65 @@
     &[disabled] {
       background: #cecece;
       box-shadow: 0 3px 0 0 #c1c0c0, 0 3px 0 2px #ccd2d2, 0 12px 20px 6px #d5dbdb;
+    }
+  }
+}
+
+.check-radio {
+  font-family: 'Open Sans Regular', 'Arial', sans-serif;
+
+  &__label {
+    display: flex;
+    width: 100%;
+    position: relative;
+
+    padding: 5px 30px 5px 6px;
+    border: 2px solid #71c9ce;
+    border-radius: 5px;
+    background: #e3fdfd;
+    font-size: 15px;
+  }
+
+  &__input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+
+    &:checked + label {
+      font-family: 'Open Sans Semibold', 'Arial', sans-serif;
+      background: #cbf1f5;
+
+      &:after {
+        content: '✓';
+        padding: 0 5px 0 2px;
+        position: absolute;
+        right: 5px;
+      }
+    }
+  }
+
+  &--row {
+    & + & {
+      border-top: 1px solid #71c9ce;
+    }
+    .check-radio__label{
+      border-width: 0;
+      border-radius: 0;
+      padding: 10px;
+    }
+
+    .check-radio__input {
+      &:checked + label {
+        &:before {
+          content: '✓';
+          padding: 0 5px 0 2px;
+        }
+        &:after {
+          display: none;
+        }
+      }
     }
   }
 }

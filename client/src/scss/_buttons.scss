@@ -1,0 +1,23 @@
+.btn {
+  display: inline-block;
+  padding: 10px;
+  border: none;
+  background: transparent;
+  outline: none;
+  transition: 0.3s;
+  color: #313131;
+  text-decoration: none;
+  user-select: none;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 18px;
+  line-height: 0;
+  -webkit-tap-highlight-color: rgba(black, 0);
+
+  &--text {
+    border: 1px solid;
+    border-radius: 15px;
+    font-family: 'Open Sans Regular', 'Arial', sans-serif;
+    font-size: 12px;
+  }
+}

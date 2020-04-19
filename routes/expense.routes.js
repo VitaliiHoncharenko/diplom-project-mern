@@ -24,11 +24,15 @@ router.post(
         });
       }
 
+      if (req.body.lenders.length <= 0 || req.body.borrowers.length <= 0) {
+        return res.status(400).json({
+          message: "В оплате не указаны кредиторы/должники",
+        });
+      }
+
       const { journey, expense } = await User.findOne({ _id: req.user.userId });
 
       const { title, amount, borrowers, lenders } = req.body;
-
-      console.log('req.body', req.body);
 
       const newExpense = new Expense({ title, amount, borrowers, lenders, journey });
 

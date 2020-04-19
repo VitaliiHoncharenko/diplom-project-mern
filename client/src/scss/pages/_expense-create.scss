@@ -14,8 +14,40 @@
     font-family: "Pacifico Regular", 'Arial', serif;
     text-align: center;
     font-size: 40px;
+    font-weight: normal;
     color: #71c9ce;
     text-shadow: 1px 1px 0 rgb(140, 138, 102);
     padding: 0 20px;
+  }
+
+  &__status-info {
+    line-height: 30px;
+    margin-top: 20px;
+  }
+
+  &__text-btn {
+    margin: 0 5px;
+    vertical-align: middle;
+    font-family: 'Open Sans Semibold', 'Arial', sans-serif;
+    border-radius: 6px;
+    padding: 14px 15px;
+    min-width: 100px;
+    background: #71c9ce;
+    color: #e3fdfd;
+  }
+
+  &__block {
+    display: flex;
+    align-items: center;
+
+    & + & {
+      border-top: 1px solid #71c9ce;
+      margin-top: 5px;
+      padding-top: 5px;
+    }
+
+    span {
+      flex: 1;
+    }
   }
 }
