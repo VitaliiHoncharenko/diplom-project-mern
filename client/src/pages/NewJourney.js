@@ -17,7 +17,7 @@ export const NewJourney = () => {
         Authorization: `Bearer ${token}`
       });
 
-      history.push(`/new-expense-details`)
+      history.push(`/journey/details`)
       message(data.message);
     } catch (e) {
       message(e.message, 'error');

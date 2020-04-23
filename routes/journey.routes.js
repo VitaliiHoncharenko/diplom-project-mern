@@ -40,6 +40,8 @@ router.post("/users/add",
   try {
     const { users } = req.body;
 
+    console.log('users', users)
+
     if (users.length <= 0) {
       return res.status(400).json({ message: 'Добавьте имена пользователей в группе' });
     }
@@ -48,7 +50,7 @@ router.post("/users/add",
 
     for(let i = 0; i < users.length; i++) {
 
-      const userName = await User.findOne({ name: users[i] });
+      const userName = await User.findOne({ name: users[i], journey });
 
       if (userName !== null) {
         return res.status(400).json({ message: `Имя '${userName.name}' уже существует` });

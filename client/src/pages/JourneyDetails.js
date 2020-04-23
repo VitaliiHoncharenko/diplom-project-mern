@@ -3,11 +3,13 @@ import { AuthContext } from "../context/AuthContext";
 import { useHttp } from "../hooks/http.hook";
 import { Loader } from "../components/Loader";
 import { useMessage } from "../hooks/message.hook";
+import { useHistory } from "react-router-dom";
 
 export const JourneyDetails = () => {
   let [users, setUsers] = useState([]);
   let [user, setUser] = useState('');
   let [author, setAuthor] = useState('');
+  const history = useHistory();
   const message = useMessage();
 
   const { token } = useContext(AuthContext);
@@ -63,7 +65,7 @@ export const JourneyDetails = () => {
       });
 
       message(data.message);
-
+      history.push(`/expense`)
     } catch (e) {
       message(e.message, 'error');
     }

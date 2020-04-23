@@ -9,46 +9,18 @@ export const ExpenseHandler = ({payers, title, amount, users}) => {
   const { token } = useContext(AuthContext);
 
 
-  const onHandler = async event => {
-    let lenders = payers.filter((payer) => payer.isPayer);
-    let borrowers = payers.filter((payer) => payer.isPayer === false);
+  const onHandler = async () => {
 
-    const isEven = lenders.length === users.length;
+    const expenseUsers = payers.reduce((payersGroup, {name, sum, isPayer}) => {
+      const type = isPayer === true ? 'lenders' : 'borrowers';
 
-    const splitAmount = amount / users.length;
-
-    const lendAmount = (isEven === false)
-      ? Math.round((splitAmount * borrowers.length / lenders.length) * 100) / 100
-      : null;
-    const debtAmount = (isEven === false)
-      ? Math.round((lendAmount * lenders.length / borrowers.length) * 100) / 100
-      : null;
-
-    const defineSum = (isLender) => {
-      if (isLender) {
-        return lendAmount;
-      }
-
-      return debtAmount;
-    };
-
-    const expenseUsers = payers.reduce((payersGroup, current) => {
-      const type = current.isPayer === true ? 'lenders' : 'borrowers';
-      const currentPayer = {
-        [type] : {
-          name: current.name,
-          sum: isEven ? 0 : defineSum(current.isPayer),
-        }
-      };
-
-      payersGroup[type] = [...payersGroup[type], currentPayer[type]];
+      payersGroup[type] = [...payersGroup[type], {name, sum}];
 
       return payersGroup;
     }, {
       lenders: [],
       borrowers: [],
     });
-
 
     try {
       const data = await request(

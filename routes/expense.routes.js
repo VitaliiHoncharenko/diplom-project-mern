@@ -38,9 +38,9 @@ router.post(
 
       const expenseData = await newExpense.save();
 
-      console.log('expenseData', expenseData);
+      // console.log('expenseData', expenseData);
 
-      await User.findOneAndUpdate({ _id: req.user.userId }, { expense: [...expense, expenseData._id] });
+      // await User.findOneAndUpdate({ _id: req.user.userId }, { expense: [...expense, expenseData._id] });
 
       res.status(201).json({ message: "Новая оплата создана" });
     } catch (e) {

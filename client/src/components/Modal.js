@@ -13,12 +13,12 @@ const customStyles = {
 
 ModalPanel.setAppElement('#root');
 
-export const Modal = ({children, isOpen, onClose, onAfterOpen}) => {
+export const Modal = ({children, isOpen, onClose, onAfterCloseModal}) => {
 
   return (
     <ModalPanel
       isOpen={isOpen}
-      // onAfterOpen={() => console.log('on after open')}
+      onAfterClose={onAfterCloseModal}
       onRequestClose={onClose}
       style={customStyles}
       contentLabel="Example Modal"
