@@ -31,22 +31,20 @@ export const ExpenseFill = ({payers, amount, closeModal, setPayers, setSplitStat
     setSplitStatus(checkSplitStatus());
   }, [payers])
 
+  useEffect(() => {
+    const sum = Object.keys(payersAmount).reduce((acc, current) => acc + payersAmount[current], 0)
+    setEnteredAmount(sum);
+
+  }, [payersAmount]);
+
   const onAmountFill = (event) => {
     event.preventDefault();
-
-    const amounts = {
-      ...payersAmount,
-      [event.target.name]: +event.target.value,
-    };
-    // amounts[index] = +event.target.value;
 
     setPayersAmount({
       ...payersAmount,
       [event.target.name]: +event.target.value
     });
 
-    const sum = Object.keys(amounts).reduce((acc, current) => acc + amounts[current], 0)
-    setEnteredAmount(sum);
   };
 
   const saveAmount = (event) => {
@@ -101,7 +99,7 @@ export const ExpenseFill = ({payers, amount, closeModal, setPayers, setSplitStat
       <div className="expense-fill__header">
         <div className="expense-fill__btn expense-fill__btn--save">
           <button
-            onClick={e => saveAmount(e)}
+            onClick={saveAmount}
           >
             Готово
           </button>
@@ -109,7 +107,7 @@ export const ExpenseFill = ({payers, amount, closeModal, setPayers, setSplitStat
         <div className="expense-fill__title">Укажите сумму</div>
         <div className="expense-fill__btn expense-fill__btn--close">
           <button
-            onClick={e => closeModal(e)}
+            onClick={closeModal}
           >
             ×
           </button>
@@ -131,7 +129,7 @@ export const ExpenseFill = ({payers, amount, closeModal, setPayers, setSplitStat
                          name={payer.name}
                          className="form__input"
                          value={payersAmount[payer.name] ? payersAmount[payer.name] : ''}
-                         onChange={e => onAmountFill(e)}
+                         onChange={onAmountFill}
                   />
                 </div>
               </div>

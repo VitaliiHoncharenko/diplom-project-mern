@@ -1,6 +1,30 @@
 .expense-create {
   height: 100%;
-  padding: 0 10px;
+  padding: 0;
+
+  &__header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    position: relative;
+    background: #71c9ce;
+  }
+
+  &__back-btn {
+    a {
+      text-decoration: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      padding: 0 15px;
+
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  }
 
   &__content {
     display: flex;
@@ -8,6 +32,10 @@
     justify-content: center;
     align-items: center;
     height: 100%;
+  }
+
+  &__form {
+    background: none;
   }
 
   &__title {
@@ -27,13 +55,8 @@
 
   &__text-btn {
     margin: 0 5px;
-    vertical-align: middle;
     font-family: 'Open Sans Semibold', 'Arial', sans-serif;
-    border-radius: 6px;
-    padding: 14px 15px;
     min-width: 100px;
-    background: #71c9ce;
-    color: #e3fdfd;
   }
 
   &__block {

@@ -5,13 +5,12 @@ import {
   CSSTransition
 } from "react-transition-group";
 
-import { LinksPage } from './pages/LinksPage'
-import { DetailPage } from './pages/DetailPage'
 import { AuthPage } from './pages/AuthPage';
 import { AddName } from './pages/AddName';
 import { NewJourney } from './pages/NewJourney';
 import { NewExpense } from './pages/NewExpense';
 import { JourneyDetails } from './pages/JourneyDetails';
+import { ExpensesPage } from './pages/ExpensesPage';
 
 export const useRoutes = isAuthenticated => {
   if (isAuthenticated) {
@@ -30,14 +29,14 @@ export const useRoutes = isAuthenticated => {
             <Route path="/journey" exact>
               <NewJourney/>
             </Route>
-            <Route path="/expense" exact>
+            <Route path="/expense/create" exact>
               <NewExpense/>
             </Route>
             <Route path="/journey/details" exact>
               <JourneyDetails/>
             </Route>
-            <Route path="/detail/:id">
-              <DetailPage/>
+            <Route path="/expense/list">
+              <ExpensesPage/>
             </Route>
             <Redirect to="/name"/>
           </Switch>

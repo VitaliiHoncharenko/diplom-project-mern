@@ -7,7 +7,7 @@ export const ExpensePayersControl = ({openEqualPayersModal, openUnequalPayersMod
         <span>Кто платит?</span>
         <button
           className="btn btn--text expense-create__text-btn"
-          onClick={e => openEqualPayersModal(e)}
+          onClick={openEqualPayersModal}
         >
           <span>{payersStatus}</span>
         </button>
@@ -16,7 +16,7 @@ export const ExpensePayersControl = ({openEqualPayersModal, openUnequalPayersMod
         <span>Как делим?</span>
         <button
           className="btn btn--text expense-create__text-btn"
-          onClick={e => openUnequalPayersModal(e)}
+          onClick={openUnequalPayersModal}
         >
           <span>{splitStatus}</span>
         </button>

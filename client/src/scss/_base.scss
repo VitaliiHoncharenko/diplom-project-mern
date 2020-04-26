@@ -67,3 +67,15 @@ button {
   font-size: 14px;
   outline: none;
 }
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
+  user-select: none;
+}
+
+select::-ms-expand {
+  display: none;
+}

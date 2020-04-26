@@ -1,16 +1,16 @@
 import React, { useContext } from "react";
+import { useHistory } from 'react-router-dom';
 import { useHttp } from '../../hooks/http.hook';
 import { useMessage } from '../../hooks/message.hook';
-import { AuthContext } from "../../context/AuthContext";
+import { AuthContext } from '../../context/AuthContext';
 
 export const ExpenseHandler = ({payers, title, amount, users}) => {
   const { request } = useHttp();
   const message = useMessage();
   const { token } = useContext(AuthContext);
-
+  const history = useHistory();
 
   const onHandler = async () => {
-
     const expenseUsers = payers.reduce((payersGroup, {name, sum, isPayer}) => {
       const type = isPayer === true ? 'lenders' : 'borrowers';
 
@@ -36,7 +36,10 @@ export const ExpenseHandler = ({payers, title, amount, users}) => {
         }
       );
 
+
+      history.push(`/expense/list`)
       message(data.message);
+
 
     } catch (e) {
       message(e.message, 'error');

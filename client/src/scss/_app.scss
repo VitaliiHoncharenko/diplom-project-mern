@@ -46,3 +46,13 @@
     }
   }
 }
+
+nav {
+  button {
+    position: fixed;
+    bottom: 0;
+    background: #9ad09a;
+    color: #fff;
+    z-index: 999;
+  }
+}

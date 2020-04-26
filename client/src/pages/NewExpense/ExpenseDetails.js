@@ -116,7 +116,7 @@ export const ExpenseDetails = ({isSinglePayer, lendersQty, closeModal, payers, s
               <div className="expense-payers__header">
                 <div className="expense-payers__btn expense-payers__btn--back">
                   <button
-                    onClick={e => closeModal(e)}
+                    onClick={closeModal}
                   >
                     ❮
                   </button>
@@ -178,7 +178,7 @@ export const ExpenseDetails = ({isSinglePayer, lendersQty, closeModal, payers, s
               <div className="expense-payers__title">Выбрать нескольких</div>
               <div className="expense-payers__btn expense-payers__btn--close">
                 <button
-                  onClick={e => closeModal(e)}
+                  onClick={closeModal}
                 >
                   ×
                 </button>
@@ -195,7 +195,7 @@ export const ExpenseDetails = ({isSinglePayer, lendersQty, closeModal, payers, s
                         type="checkbox"
                         name={payer.name}
                         checked={payer.isPayer}
-                        onChange={e => onMultiplePayers(e)}
+                        onChange={onMultiplePayers}
                       />
                       <label className="check-radio__label" htmlFor={`check-multi-${index}`}>
                         {payer.name}

@@ -6,6 +6,7 @@ const schema = new Schema({
   journey: { type: Types.ObjectId, ref: "Journey" },
   borrowers: [{ _id: false, name: String, sum: Number }],
   lenders: [{ _id: false, name: String, sum: Number }],
+  createdAt: { type: Date, default: Date.now, required: true },
 }, { versionKey: false });
 
 module.exports = model("Expense", schema);

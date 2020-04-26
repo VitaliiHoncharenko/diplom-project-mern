@@ -9,6 +9,7 @@ import { ExpenseFormInput } from './ExpenseFormInput';
 import { ExpensePayersControl } from './ExpensePayersControl';
 import { ExpenseHandler } from './ExpenseHandler';
 import { ExpenseFill } from './ExpenseFill';
+import { NavLink } from "react-router-dom";
 
 export const NewExpense = () => {
   const [title, setTitle] = useState('');
@@ -94,7 +95,7 @@ export const NewExpense = () => {
       return {
         name: user.name,
         isPayer: user.name === author,
-      }
+      };
     });
 
     setPayers([...payersList]);
@@ -114,12 +115,12 @@ export const NewExpense = () => {
     }
 
     const payerStatus = () => {
-      if (foundPayers.length > 1 ) {
+      if (foundPayers.length > 1) {
         return `${foundPayers.length} чел.`;
       }
 
       if (foundPayers[0].name === author) {
-        return `${foundPayers[0].name}(Вы)`
+        return `${foundPayers[0].name}(Вы)`;
       }
 
       return foundPayers[0].name;
@@ -141,7 +142,7 @@ export const NewExpense = () => {
       return group;
     };
 
-    const {lenders, borrowers} = payersList.reduce(splitPayers, {
+    const { lenders, borrowers } = payersList.reduce(splitPayers, {
       lenders: [],
       borrowers: [],
     });
@@ -149,14 +150,14 @@ export const NewExpense = () => {
     const lendAmount = Math.round((splitAmount * borrowers.length / lenders.length) * 100) / 100;
     const debtAmount = Math.round((lendAmount * lenders.length / borrowers.length) * 100) / 100;
 
-    return payersList.map(({name, isPayer}) => {
+    return payersList.map(({ name, isPayer }) => {
       const isLender = isPayer && splitAmount <= lendAmount;
 
       return {
         name,
         isPayer: isLender,
         sum: isLender ? lendAmount : debtAmount,
-      }
+      };
     });
   };
 
@@ -170,7 +171,16 @@ export const NewExpense = () => {
 
   return (
     <div className="expense-create">
-      {console.log('render')}
+      <div className="expense-create__header">
+        <div className="expense-create__back-btn">
+          <NavLink to="/expense/list">
+            <span>❮</span>
+          </NavLink>
+        </div>
+        <div className="expense-payers__title">
+          Выберите плательщика
+        </div>
+      </div>
       <form className="expense-create__form form">
         <div className="form__title">Укажите название и сумму новой оплаты:</div>
         <ExpenseFormInput
@@ -193,40 +203,40 @@ export const NewExpense = () => {
           amount={amount}
           users={users}
         />
-
-        <Modal
-          onOpen={e => openEqualPayersModal(e)}
-          onClose={e => closeEqualPayersModal(e)}
-          isOpen={isEqualPayersModalOpen}
-          onAfterCloseModal={() => setSinglePayer(true)}
-        >
-          <ExpenseDetails
-            payers={payers}
-            amount={amount}
-            isSinglePayer={isSinglePayer}
-            lendersQty={lendersQty}
-            setSinglePayer={setSinglePayer}
-            setPayers={setPayers}
-            closeModal={closeEqualPayersModal}
-          />
-        </Modal>
-
-        <Modal
-          onOpen={e => openUnequalPayersModal(e)}
-          onClose={e => closeUnequalPayersModal(e)}
-          isOpen={isUnequalPayersModalOpen}
-        >
-          <ExpenseFill
-            payers={payers}
-            amount={amount}
-            setPayers={setPayers}
-            closeModal={closeUnequalPayersModal}
-            setSplitStatus={setSplitStatus}
-            payersAmount={payersAmount}
-            setPayersAmount={setPayersAmount}
-          />
-        </Modal>
       </form>
+
+      <Modal
+        onOpen={openEqualPayersModal}
+        onClose={closeEqualPayersModal}
+        isOpen={isEqualPayersModalOpen}
+        onAfterCloseModal={() => setSinglePayer(true)}
+      >
+        <ExpenseDetails
+          payers={payers}
+          amount={amount}
+          isSinglePayer={isSinglePayer}
+          lendersQty={lendersQty}
+          setSinglePayer={setSinglePayer}
+          setPayers={setPayers}
+          closeModal={closeEqualPayersModal}
+        />
+      </Modal>
+
+      <Modal
+        onOpen={openUnequalPayersModal}
+        onClose={closeUnequalPayersModal}
+        isOpen={isUnequalPayersModalOpen}
+      >
+        <ExpenseFill
+          payers={payers}
+          amount={amount}
+          setPayers={setPayers}
+          closeModal={closeUnequalPayersModal}
+          setSplitStatus={setSplitStatus}
+          payersAmount={payersAmount}
+          setPayersAmount={setPayersAmount}
+        />
+      </Modal>
     </div>
   );
 };

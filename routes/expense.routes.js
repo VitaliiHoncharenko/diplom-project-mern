@@ -30,7 +30,7 @@ router.post(
         });
       }
 
-      const { journey, expense } = await User.findOne({ _id: req.user.userId });
+      const { journey } = await User.findOne({ _id: req.user.userId });
 
       const { title, amount, borrowers, lenders } = req.body;
 
@@ -38,14 +38,27 @@ router.post(
 
       const expenseData = await newExpense.save();
 
-      // console.log('expenseData', expenseData);
-
-      // await User.findOneAndUpdate({ _id: req.user.userId }, { expense: [...expense, expenseData._id] });
-
       res.status(201).json({ message: "Новая оплата создана" });
     } catch (e) {
       res.status(500).json({ message: e });
     }
   });
+
+// api/expense/list
+router.get("/list", auth, async (req, res) => {
+
+    try {
+      const { journey } = await User.findOne({ _id: req.user.userId });
+
+      const expenses = await Expense.find({ journey });
+
+      res.json(expenses);
+
+      // res.status(201).json({ message: "Новая оплата создана" });
+    } catch (e) {
+      res.status(500).json({ message: e });
+    }
+  });
+
 
 module.exports = router;
