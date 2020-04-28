@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
+import React  from "react";
 import { Transition } from 'react-transition-group';
 
 const duration = 300;
 
 const defaultStyleSinglePayer = {
   transition: `transform ${duration}ms ease-in-out`,
-  // opacity: 0,
   transform: 'translateX(0)',
 };
 
@@ -18,7 +17,6 @@ const transitionStylesSinglePayer = {
 
 const defaultStyleMultiPayer = {
   transition: `transform ${duration}ms ease-in-out`,
-  // opacity: 0,
   transform: 'translateX(-100%)',
 };
 
@@ -31,7 +29,7 @@ const transitionStylesMultiPayer = {
 
 export const ExpenseDetails = ({isSinglePayer, lendersQty, closeModal, payers, setSinglePayer, setPayers, amount}) => {
   const splitPayers = (group, payer) => {
-    const type = payer.isPayer === true ? 'lenders' : 'borrowers';
+    const type = payer.isLender === true ? 'lenders' : 'borrowers';
 
     group[type] = [...group[type], payer];
 
@@ -49,11 +47,11 @@ export const ExpenseDetails = ({isSinglePayer, lendersQty, closeModal, payers, s
     const lendAmount = Math.round((splitAmount * borrowers.length / lenders.length) * 100) / 100;
     const debtAmount = Math.round((lendAmount * lenders.length / borrowers.length) * 100) / 100;
 
-    return payersList.map(({name, isPayer}) => {
+    return payersList.map(({name, isLender}) => {
         return {
           name,
-          isPayer,
-          sum: isPayer ? lendAmount : debtAmount,
+          isLender,
+          sum: isLender ? lendAmount : debtAmount,
         }
     });
   };
@@ -61,7 +59,8 @@ export const ExpenseDetails = ({isSinglePayer, lendersQty, closeModal, payers, s
   const onPayerChanged = (event) => {
     const updatedPayers = payers.map((payer) => ({
       name: payer.name,
-      isPayer: event.target.value === payer.name,
+      isLender: event.target.value === payer.name,
+      isPayer: true,
     }));
 
     const payersWithSum = calculateSumPerPayer(updatedPayers);
@@ -79,17 +78,18 @@ export const ExpenseDetails = ({isSinglePayer, lendersQty, closeModal, payers, s
           return event.target.checked;
         }
 
-        return payer.isPayer;
+        return payer.isLender;
       };
 
       return {
         name: payer.name,
-        isPayer: checkValue(),
+        isLender: checkValue(),
+        isPayer: true,
       }
     });
 
     const payersWithSum = calculateSumPerPayer(updatedPayers);
-    const isAnyPayer = payersWithSum.some((payer) => payer.isPayer === true);
+    const isAnyPayer = payersWithSum.some((payer) => payer.isLender === true);
 
     if (isAnyPayer === false) {
       alert('Как минимум один человек участвует в оплате');
@@ -134,7 +134,7 @@ export const ExpenseDetails = ({isSinglePayer, lendersQty, closeModal, payers, s
                                id={`check-payer-${index}`}
                                className="check-radio__input"
                                value={payer.name}
-                               checked={lendersQty === 1 && payer.isPayer === true}
+                               checked={lendersQty === 1 && payer.isLender === true}
                                onChange={e => onPayerChanged(e)}
                         />
                         <label
@@ -194,7 +194,7 @@ export const ExpenseDetails = ({isSinglePayer, lendersQty, closeModal, payers, s
                         className="check-radio__input"
                         type="checkbox"
                         name={payer.name}
-                        checked={payer.isPayer}
+                        checked={payer.isLender}
                         onChange={onMultiplePayers}
                       />
                       <label className="check-radio__label" htmlFor={`check-multi-${index}`}>

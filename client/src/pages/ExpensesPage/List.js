@@ -1,5 +1,5 @@
 import React from 'react';
-import { formatDate } from "../../helpers";
+import { formatDate, formatMoney } from "../../helpers";
 
 export const List = ({visibleExpenses}) => {
   const getSum = (borrowers) => {
@@ -21,10 +21,10 @@ export const List = ({visibleExpenses}) => {
                 <div className="expenses-page__item-info">
                   <div className="expenses-page__info-top">
                     <div className="expenses-page__item-title"><span>{expense.title}</span></div>
-                    <div className="expenses-page__item-amount">{expense.amount} </div>
+                    <div className="expenses-page__item-amount">{formatMoney(expense.amount)} </div>
                   </div>
                   <div className="expenses-page__info-bottom">
-                    Сумма долга: {getSum(expense.borrowers)}
+                    Сумма долга: {formatMoney(getSum(expense.borrowers))}
                   </div>
                 </div>
                 <div className="expenses-page__item-open">

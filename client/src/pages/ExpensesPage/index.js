@@ -6,6 +6,7 @@ import { useMessage } from '../../hooks/message.hook';
 import { Loader } from '../../components/Loader';
 import { NavLink } from 'react-router-dom';
 import { List } from './List';
+import { formatDate, formatMoney } from '../../helpers';
 
 export const ExpensesPage = () => {
   const { token } = useContext(AuthContext);
@@ -14,6 +15,8 @@ export const ExpensesPage = () => {
   const [visibleExpenses, setVisibleExpenses] = useState([]);
   const [userNames, setUserNames] = useState([]);
   const [currentName, setCurrentName] = useState('all');
+  const [journey, setJourney] = useState({});
+  const [totalDebt, setTotalDebt] = useState(0);
 
   const message = useMessage();
 
@@ -47,6 +50,23 @@ export const ExpensesPage = () => {
     }
   }, [token, request]);
 
+  const getJourney = useCallback(async () => {
+    try {
+      const fetched = await request('/api/journey', 'GET', null, {
+        Authorization: `Bearer ${token}`
+      });
+
+      setJourney({ ...fetched });
+
+    } catch (e) {
+      message(e.message, 'error');
+    }
+  }, [token, request]);
+
+  useEffect(() => {
+    getJourney();
+  }, [getJourney]);
+
   useEffect(() => {
     getExpensesList();
   }, [getExpensesList]);
@@ -66,7 +86,7 @@ export const ExpensesPage = () => {
     }
 
     const expensesByName = expenses.filter((expense) => {
-      return expense.borrowers.some((item) => item.name === currentName)
+      return expense.borrowers.some((item) => item.name === currentName);
     });
 
     setVisibleExpenses([...expensesByName]);
@@ -74,8 +94,27 @@ export const ExpensesPage = () => {
 
   }, [expenses, currentName]);
 
+  useEffect(() => {
+    if (expenses.length <= 0) {
+      return;
+    }
+
+    const currentUserDebt = (user) => {
+      return user.name === currentName ? user.sum : 0;
+    };
+
+    const totalDebt = expenses.reduce((total, current) => {
+      return total + current.borrowers.reduce((totalDebt, currentDebt) => {
+        return totalDebt + (currentName === 'all' ? currentDebt.sum : currentUserDebt(currentDebt));
+      }, 0)
+    }, 0);
+
+    setTotalDebt(totalDebt);
+
+  }, [expenses, currentName]);
+
   const getCurrentExpenses = (event) => {
-    setCurrentName(event.target.value)
+    setCurrentName(event.target.value);
   };
 
   if (loading) {
@@ -85,9 +124,13 @@ export const ExpensesPage = () => {
   return (
     <div className="expenses-page">
       <div className="expenses-page__brief">
-        <div className="expenses-page__journey-title">Название поездки</div>
-        <div className="expenses-page__journey-date">Создана: <span>4 декабря 2020</span></div>
-        <div>Сколько должны: 2566</div>
+        <div className="expenses-page__journey-title">{journey.title}</div>
+        <div className="expenses-page__journey-date">
+          Создана: <span className="date" dangerouslySetInnerHTML={{__html: formatDate(journey.createdAt)}} />
+        </div>
+        <div className="expenses-page__summary-debt">
+          {`Сумма долга (${currentName === 'all' ? 'общая' : currentName}):`}<span>{formatMoney(totalDebt)}</span>
+        </div>
       </div>
       <div className="expenses-page__header">
         <div className="expenses-page__select-box">
@@ -97,7 +140,7 @@ export const ExpensesPage = () => {
               userNames.map((name, idx) => {
                 return (
                   <option key={idx} value={name}>Расходы {name}</option>
-                )
+                );
               })
             }
           </select>

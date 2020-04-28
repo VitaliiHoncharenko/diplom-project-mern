@@ -11,7 +11,29 @@
   }
 
   &__journey-date {
-    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+
+    font-family: 'Open Sans Regular', 'Arial', sans-serif;
+    text-align: left;
+    font-size: 13px;
+
+    .date {
+      font-family: 'Open Sans Semibold', 'Arial', sans-serif;
+    }
+  }
+
+  &__summary-debt {
+    display: flex;
+    justify-content: space-between;
+
+    font-family: 'Open Sans Regular', 'Arial', sans-serif;
+    font-size: 13px;
+    text-align: left;
+
+    span {
+      font-family: 'Open Sans Semibold', 'Arial', sans-serif;
+    }
   }
 
   &__header {

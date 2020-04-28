@@ -38,7 +38,7 @@ export const useRoutes = isAuthenticated => {
             <Route path="/expense/list">
               <ExpensesPage/>
             </Route>
-            <Redirect to="/name"/>
+            <Redirect to="/expense/list"/>
           </Switch>
           </CSSTransition>
         </TransitionGroup>

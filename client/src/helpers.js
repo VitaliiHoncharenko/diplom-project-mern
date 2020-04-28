@@ -38,3 +38,13 @@ export const formatDate = (date, part = 'full') => {
     return `<span class="day">${day}</span><span class="month">${formattedMonth}</span>`
   }
 };
+
+export const formatMoney = (amount) => {
+  const amountToInt = +amount;
+  const amoutnToString = amountToInt.toLocaleString('ru-RU');
+  const amountSplit = amoutnToString.split(/[,]/);
+
+  const isAddZero = amountSplit[1] !== undefined && amountSplit[1].length === 1;
+
+  return isAddZero ? `${amoutnToString.replace(',', '.')}0` : `${amoutnToString.replace(',', '.')}`;
+}

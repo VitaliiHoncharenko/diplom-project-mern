@@ -4,15 +4,19 @@ import { useHttp } from '../../hooks/http.hook';
 import { useMessage } from '../../hooks/message.hook';
 import { AuthContext } from '../../context/AuthContext';
 
-export const ExpenseHandler = ({payers, title, amount, users}) => {
+export const ExpenseHandler = ({payers, title, amount}) => {
   const { request } = useHttp();
   const message = useMessage();
   const { token } = useContext(AuthContext);
   const history = useHistory();
 
   const onHandler = async () => {
-    const expenseUsers = payers.reduce((payersGroup, {name, sum, isPayer}) => {
-      const type = isPayer === true ? 'lenders' : 'borrowers';
+    const expenseUsers = payers.reduce((payersGroup, {name, sum, isLender}) => {
+      const type = isLender === true ? 'lenders' : 'borrowers';
+
+      if (sum === 0) {
+        return payersGroup;
+      }
 
       payersGroup[type] = [...payersGroup[type], {name, sum}];
 
@@ -22,6 +26,17 @@ export const ExpenseHandler = ({payers, title, amount, users}) => {
       borrowers: [],
     });
 
+    const filterExpense = () => {
+      if (expenseUsers.lenders.length === 0 || expenseUsers.borrowers.length === 0) {
+        return {
+          lenders: [],
+          borrowers: [],
+        }
+      }
+
+      return expenseUsers;
+    };
+
     try {
       const data = await request(
         '/api/expense/create',
@@ -29,17 +44,15 @@ export const ExpenseHandler = ({payers, title, amount, users}) => {
         {
           title,
           amount,
-          ...expenseUsers,
+          ...filterExpense(),
         },
         {
           Authorization: `Bearer ${token}`
         }
       );
 
-
       history.push(`/expense/list`)
       message(data.message);
-
 
     } catch (e) {
       message(e.message, 'error');

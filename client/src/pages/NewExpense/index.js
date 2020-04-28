@@ -25,6 +25,7 @@ export const NewExpense = () => {
   const [splitStatus, setSplitStatus] = useState('Поровну');
   const [lendersQty, setLendersQty] = useState(0);
   const [payersAmount, setPayersAmount] = useState({});
+  const [notPayers, setNotPayers] = useState({});
 
   const [isSinglePayer, setSinglePayer] = useState(true);
 
@@ -79,6 +80,10 @@ export const NewExpense = () => {
   }, []);
 
   useEffect(() => {
+    if (users.length <= 0) {
+      return;
+    }
+
     const authorData = users.find((user) => {
       return user._id === userId;
     });
@@ -90,11 +95,25 @@ export const NewExpense = () => {
 
   }, [users]);
 
+
+  useEffect(() => {
+    if (users.length <= 0) {
+      return;
+    }
+
+    const getNames = users.reduce((acc, user) => {
+      acc = {...acc, [user.name]: false};
+      return acc;
+    }, {});
+
+    setNotPayers({...getNames})
+  }, [users]);
+
   useEffect(() => {
     const payersList = users.map((user) => {
       return {
         name: user.name,
-        isPayer: user.name === author,
+        isLender: user.name === author,
       };
     });
 
@@ -107,7 +126,7 @@ export const NewExpense = () => {
     }
 
     const foundPayers = payers.filter((payer) => {
-      return payer.isPayer;
+      return payer.isLender;
     });
 
     if (foundPayers.length <= 0) {
@@ -135,7 +154,7 @@ export const NewExpense = () => {
     const splitAmount = +amount / payers.length;
 
     const splitPayers = (group, payer) => {
-      const type = payer.isPayer === true ? 'lenders' : 'borrowers';
+      const type = payer.isLender === true ? 'lenders' : 'borrowers';
 
       group[type] = [...group[type], payer];
 
@@ -150,13 +169,13 @@ export const NewExpense = () => {
     const lendAmount = Math.round((splitAmount * borrowers.length / lenders.length) * 100) / 100;
     const debtAmount = Math.round((lendAmount * lenders.length / borrowers.length) * 100) / 100;
 
-    return payersList.map(({ name, isPayer }) => {
-      const isLender = isPayer && splitAmount <= lendAmount;
+    return payersList.map(({ name, isLender }) => {
+      const isNeedToPay = isLender && splitAmount <= lendAmount;
 
       return {
         name,
-        isPayer: isLender,
-        sum: isLender ? lendAmount : debtAmount,
+        isLender: isNeedToPay,
+        sum: isNeedToPay ? lendAmount : debtAmount,
       };
     });
   };
@@ -201,7 +220,6 @@ export const NewExpense = () => {
           payers={payers}
           title={title}
           amount={amount}
-          users={users}
         />
       </form>
 
@@ -231,6 +249,8 @@ export const NewExpense = () => {
           payers={payers}
           amount={amount}
           setPayers={setPayers}
+          notPayers={notPayers}
+          setNotPayers={setNotPayers}
           closeModal={closeUnequalPayersModal}
           setSplitStatus={setSplitStatus}
           payersAmount={payersAmount}

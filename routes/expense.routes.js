@@ -23,12 +23,12 @@ router.post(
           message: "Некорректный данные оплаты",
         });
       }
-
-      if (req.body.lenders.length <= 0 || req.body.borrowers.length <= 0) {
-        return res.status(400).json({
-          message: "В оплате не указаны кредиторы/должники",
-        });
-      }
+      //
+      // if (req.body.lenders.length <= 0 || req.body.borrowers.length <= 0) {
+      //   return res.status(400).json({
+      //     message: "В оплате не указаны кредиторы/должники",
+      //   });
+      // }
 
       const { journey } = await User.findOne({ _id: req.user.userId });
 
@@ -53,8 +53,6 @@ router.get("/list", auth, async (req, res) => {
       const expenses = await Expense.find({ journey });
 
       res.json(expenses);
-
-      // res.status(201).json({ message: "Новая оплата создана" });
     } catch (e) {
       res.status(500).json({ message: e });
     }

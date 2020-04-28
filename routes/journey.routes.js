@@ -6,6 +6,19 @@ const auth = require("../middleware/auth.middleware");
 const { check, validationResult } = require("express-validator");
 const router = Router();
 
+//api/journey
+router.get('/', auth, async (req, res) => {
+  try {
+    const { journey } = await User.findOne({ _id: req.user.userId });
+    const currentJourney = await Journey.findOne({ _id: journey });
+
+    res.json(currentJourney);
+
+  } catch (e) {
+    res.status(500).json({ message: e });
+  }
+});
+
 //api/journey/create
 router.post("/create", [auth, check("title", "Минимальная длина названия поездки -  5 символов").isLength({ min: 2 })], async (req, res) => {
   try {

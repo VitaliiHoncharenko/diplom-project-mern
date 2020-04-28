@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-export const ExpenseFill = ({payers, amount, closeModal, setPayers, setSplitStatus, payersAmount, setPayersAmount}) => {
+export const ExpenseFill = ({payers, amount, notPayers, setNotPayers, closeModal, setPayers, setSplitStatus, payersAmount, setPayersAmount}) => {
   const [enteredAmount, setEnteredAmount] = useState(0);
 
   useEffect(() => {
@@ -27,12 +27,11 @@ export const ExpenseFill = ({payers, amount, closeModal, setPayers, setSplitStat
       return defaultText;
     };
 
-
     setSplitStatus(checkSplitStatus());
-  }, [payers])
+  }, [payers]);
 
   useEffect(() => {
-    const sum = Object.keys(payersAmount).reduce((acc, current) => acc + payersAmount[current], 0)
+    const sum = Object.keys(payersAmount).reduce((acc, current) => acc + payersAmount[current], 0);
     setEnteredAmount(sum);
 
   }, [payersAmount]);
@@ -60,27 +59,51 @@ export const ExpenseFill = ({payers, amount, closeModal, setPayers, setSplitStat
       return;
     }
 
-    const splitAmount = amountToInt / payers.length;
+    const defineNotPayerQty = Object.keys(notPayers).reduce((sum, user) => {
+      return sum + (+notPayers[user]);
+    }, 0);
+
+
+    const splitAmount = defineNotPayerQty > 0 ? amountToInt / (payers.length - defineNotPayerQty) : amountToInt / payers.length;
 
     const updatedPayers = payers.map((payer) => {
-      const defineDebt =  (sum = 0) => {
-        if (splitAmount - sum > 0) {
+      const defineDebt = (sum = 0) => {
+        if (notPayers[payer.name] === true) {
+          if (sum === 0) {
+            return {
+              isLender: false,
+              isPayer: false,
+              sum: 0,
+            };
+          }
+
           return {
+            isLender: true,
             isPayer: false,
-            sum: Math.round((splitAmount - sum) * 100) / 100,
+            sum: Math.round(sum * 100) / 100,
           }
         }
 
-        if (splitAmount - sum < 0) {
+        if (sum > splitAmount) {
           return {
+            isLender: true,
             isPayer: true,
             sum: Math.round((sum - splitAmount) * 100) / 100,
           }
         }
 
+        if (sum < splitAmount) {
+          return {
+            isLender: false,
+            isPayer: true,
+            sum: Math.round((splitAmount - sum) * 100) / 100,
+          }
+        }
+
         return {
+          isLender: false,
           isPayer: true,
-          sum: 0,
+          sum: Math.round((splitAmount) * 100) / 100,
         }
       };
 
@@ -92,6 +115,10 @@ export const ExpenseFill = ({payers, amount, closeModal, setPayers, setSplitStat
 
     setPayers([...updatedPayers]);
     closeModal(event);
+  };
+
+  const defineNotPayers = (event) => {
+    setNotPayers({...notPayers, [event.target.name]: !event.target.checked});
   };
 
   return (
@@ -118,18 +145,27 @@ export const ExpenseFill = ({payers, amount, closeModal, setPayers, setSplitStat
           {
             payers.length && payers.map((payer) =>
               <div className="expense-fill__item" key={payer.name}>
-                <label>
+                <span className="expense-fill__name">
                   {payer.name}
+                </span>
+                <label className="checkbox-switcher">
+                  <input
+                    type="checkbox"
+                    name={payer.name}
+                    defaultChecked={notPayers[payer.name] ? notPayers[payer.name] === false : true} onChange={defineNotPayers}
+                  />
+                  <span className="track thumb"/>
                 </label>
                 <div className="expense-fill__input-row">
                   <span>₴</span>
-                  <input type="number"
-                         inputMode="decimal"
-                         placeholder="0.00"
-                         name={payer.name}
-                         className="form__input"
-                         value={payersAmount[payer.name] ? payersAmount[payer.name] : ''}
-                         onChange={onAmountFill}
+                  <input
+                    type="number"
+                    inputMode="decimal"
+                    placeholder="0.00"
+                    name={payer.name}
+                    className="form__input"
+                    value={payersAmount[payer.name] ? payersAmount[payer.name] : ''}
+                    onChange={onAmountFill}
                   />
                 </div>
               </div>
