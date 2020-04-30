@@ -157,6 +157,7 @@ export const ExpensesPage = () => {
       <div className="expenses-page__body">
         <List
           visibleExpenses={visibleExpenses}
+          currentName={currentName}
         />
       </div>
     </div>

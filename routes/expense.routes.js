@@ -46,17 +46,32 @@ router.post(
 
 // api/expense/list
 router.get("/list", auth, async (req, res) => {
+  try {
+    const { journey } = await User.findOne({ _id: req.user.userId });
 
-    try {
-      const { journey } = await User.findOne({ _id: req.user.userId });
+    const expenses = await Expense.find({ journey });
 
-      const expenses = await Expense.find({ journey });
+    res.json(expenses);
+  } catch (e) {
+    res.status(500).json({ message: e });
+  }
+});
 
-      res.json(expenses);
-    } catch (e) {
-      res.status(500).json({ message: e });
+// api/expense/:id
+router.get('/:id', async (req, res) => {
+  try {
+    const expense = await Expense.findOne({ _id: req.params.id })
+
+    if (expense) {
+      return res.json(expense);
     }
-  });
+
+    res.redirect('/expense/create')
+
+  } catch (e) {
+      res.status(500).json({ message: 'Оплата не найдена' })
+  }
+})
 
 
 module.exports = router;

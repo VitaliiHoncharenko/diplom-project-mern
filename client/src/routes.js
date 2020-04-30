@@ -11,6 +11,7 @@ import { NewJourney } from './pages/NewJourney';
 import { NewExpense } from './pages/NewExpense';
 import { JourneyDetails } from './pages/JourneyDetails';
 import { ExpensesPage } from './pages/ExpensesPage';
+import { ExpenseDetails } from './pages/ExpenseDetails';
 
 export const useRoutes = isAuthenticated => {
   if (isAuthenticated) {
@@ -35,8 +36,11 @@ export const useRoutes = isAuthenticated => {
             <Route path="/journey/details" exact>
               <JourneyDetails/>
             </Route>
-            <Route path="/expense/list">
+            <Route path="/expense/list" exact>
               <ExpensesPage/>
+            </Route>
+            <Route path="/expense/:id">
+              <ExpenseDetails/>
             </Route>
             <Redirect to="/expense/list"/>
           </Switch>
