@@ -6,7 +6,6 @@ import {
 } from "react-transition-group";
 
 import { AuthPage } from './pages/AuthPage';
-import { AddName } from './pages/AddName';
 import { NewJourney } from './pages/NewJourney';
 import { NewExpense } from './pages/NewExpense';
 import { JourneyDetails } from './pages/JourneyDetails';
@@ -24,9 +23,6 @@ export const useRoutes = isAuthenticated => {
             timeout={300}
           >
           <Switch location={location}>
-            <Route path="/name" exact>
-              <AddName/>
-            </Route>
             <Route path="/journey" exact>
               <NewJourney/>
             </Route>

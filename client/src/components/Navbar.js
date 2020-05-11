@@ -5,7 +5,6 @@ import { AuthContext } from '../context/AuthContext';
 export const Navbar = () => {
   const history = useHistory();
   const auth = useContext(AuthContext);
-  const [isShow, setIsShow] = useState(false);
 
   const logoutHandler = event => {
     event.preventDefault();
@@ -15,8 +14,7 @@ export const Navbar = () => {
 
   return (
     <nav>
-      <button onClick={() => setIsShow(!isShow)}>Close</button>
-      {isShow && <div>
+      <div>
         <span className="brand-logo">I OWE YOU</span>
         <ul id="nav-mobile" className="right hide-on-med-and-down">
           <li><NavLink to="/name">Добавить имя</NavLink></li>
@@ -26,7 +24,7 @@ export const Navbar = () => {
           <li><NavLink to="/journey/details">Создать детали поездки</NavLink></li>
           <li><a href="/" onClick={logoutHandler}>Выйти</a></li>
         </ul>
-      </div>}
+      </div>
     </nav>
   );
 };

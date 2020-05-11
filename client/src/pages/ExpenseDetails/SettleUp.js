@@ -34,8 +34,13 @@ export const SettleUp = ({ borrowers, lenders, setBorrowers, setLenders, current
 
   const onPaybackHandler = async (event) => {
     event.persist();
-
     const inputValue = +settleUpInput.current.value;
+
+    if (+inputValue > +borrower.sum) {
+      alert(`Введенная сумма больше требуемой - ${borrower.sum}`)
+      return;
+    }
+
     const updatedDebtSum = borrower.sum - inputValue;
     const updatedOwedSum = lender.sum - inputValue;
 

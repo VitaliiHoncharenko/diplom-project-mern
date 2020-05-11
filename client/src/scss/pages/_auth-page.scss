@@ -1,6 +1,12 @@
 .auth-page {
   height: 100%;
-  padding: 0 10px;
+  padding: 25px 10px;
+
+  &__tab-content {
+    &.react-tabs__tab-panel--selected {
+      padding: 30px;
+    }
+  }
 
   &__content {
     display: flex;
@@ -23,5 +29,20 @@
 
   &__form {
     margin: 0 auto;
+    padding: 0;
+    overflow: hidden;
   }
+
+  .expense-details__tab {
+    background: #cbf1f5;
+  }
+
+  .expense-details__tab.react-tabs__tab--selected {
+    //background: #cbf1f5;
+    background: none;
+  }
+
+
 }
+
+

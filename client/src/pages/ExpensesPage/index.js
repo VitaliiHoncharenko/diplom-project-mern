@@ -4,12 +4,12 @@ import { AuthContext } from '../../context/AuthContext';
 import { useHttp } from '../../hooks/http.hook';
 import { useMessage } from '../../hooks/message.hook';
 import { Loader } from '../../components/Loader';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { List } from './List';
 import { formatDate, formatMoney } from '../../helpers';
 
 export const ExpensesPage = () => {
-  const { token } = useContext(AuthContext);
+  const { token, logout } = useContext(AuthContext);
   const { request, loading } = useHttp();
   const [expenses, setExpenses] = useState([]);
   const [visibleExpenses, setVisibleExpenses] = useState([]);
@@ -19,6 +19,7 @@ export const ExpensesPage = () => {
   const [totalDebt, setTotalDebt] = useState(0);
 
   const message = useMessage();
+  const history = useHistory();
 
   const getExpensesList = useCallback(async () => {
     try {
@@ -55,6 +56,10 @@ export const ExpensesPage = () => {
       const fetched = await request('/api/journey', 'GET', null, {
         Authorization: `Bearer ${token}`
       });
+
+      if (fetched === null) {
+        history.push(`/journey`)
+      }
 
       setJourney({ ...fetched });
 
@@ -121,12 +126,27 @@ export const ExpensesPage = () => {
     setCurrentName(event.target.value);
   };
 
+  const logoutHandler = event => {
+    event.preventDefault();
+    logout();
+    history.push('/');
+  };
+
   if (loading) {
     return <Loader/>;
   }
 
   return (
     <div className="expenses-page">
+      <div className="header">
+        <div className="header__title">Список оплат</div>
+        <a className="header__btn-exit"
+           href="/"
+           onClick={logoutHandler}
+        >
+          <span>Выйти</span>
+        </a>
+      </div>
       <div className="expenses-page__brief">
         <div className="expenses-page__journey-title">{journey.title}</div>
         <div className="expenses-page__expense-info">

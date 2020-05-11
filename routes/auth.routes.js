@@ -12,8 +12,8 @@ router.post(
   "/register",
   [
     check("email", "Некорректный email").isEmail(),
-    check("password", "Минимальная длина пароля 6 символов")
-      .isLength({ min: 6 }),
+    check("password", "Минимальная длина пароля 6 символов").isLength({ min: 6 }),
+    check("name", "Минимальная длина пароля 2 символа").isLength({ min: 2 }),
   ],
   async (req, res) => {
     try {
@@ -26,7 +26,7 @@ router.post(
         });
       }
 
-      const { email, password } = req.body;
+      const { email, password, name } = req.body;
 
       const candidate = await User.findOne({ email });
 
@@ -35,7 +35,7 @@ router.post(
       }
 
       const hashedPassword = await bcrypt.hash(password, 12);
-      const user = new User({ email, password: hashedPassword });
+      const user = new User({ email, password: hashedPassword, name });
 
       await user.save();
 

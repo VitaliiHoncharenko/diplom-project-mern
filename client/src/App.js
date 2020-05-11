@@ -22,7 +22,7 @@ function App() {
         token, login, logout, userId, isAuthenticated, userName,
       }}>
         <Router>
-            {isAuthenticated && <Navbar/>}
+            {/*{isAuthenticated && <Navbar/>}*/}
             <div className="app__body">
               {routes}
             </div>
