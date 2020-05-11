@@ -8,12 +8,9 @@ const app = express();
 app.use(express.json({extended: true}));
 
 app.use("/api/auth", require("./routes/auth.routes"));
-// app.use("/api/link", require("./routes/link.routes"));
 app.use("/api/users", require("./routes/users.routes"));
-// app.use("/api/group", require("./routes/group.routes"));
 app.use("/api/journey", require("./routes/journey.routes"));
 app.use("/api/expense", require("./routes/expense.routes"));
-// app.use("/t", require("./routes/redirect.routes"));
 
 if (process.env.NODE_ENV === "production") {
   app.use("/", express.static(path.join(__dirname, "client", "build")));
@@ -23,11 +20,11 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-const PORT = config.get("port") || 5000;
+const PORT = process.env.port || 5000;
 
 async function start() {
   try {
-    await mongoose.connect(config.get("mongoUri"), {
+    await mongoose.connect(process.env.MONGODB_URI || config.get("mongoUri"), {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
