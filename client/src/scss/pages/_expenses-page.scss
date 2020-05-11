@@ -1,4 +1,8 @@
 .expenses-page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
   &__brief {
     padding: 10px;
     background: #a6e3e9;
@@ -10,17 +14,26 @@
     font-size: 18px;
   }
 
-  &__journey-date {
+  &__expense-info {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
 
     font-family: 'Open Sans Regular', 'Arial', sans-serif;
     text-align: left;
     font-size: 13px;
+  }
 
-    .date {
-      font-family: 'Open Sans Semibold', 'Arial', sans-serif;
-    }
+  &__separator {
+    margin: 0 6px;
+
+    font-family: 'Arial', sans-serif;
+    font-size: 26px;
+    line-height: 10px;
+  }
+
+  &__body {
+    position: relative;
   }
 
   &__summary-debt {
@@ -31,7 +44,7 @@
     font-size: 13px;
     text-align: left;
 
-    padding-top: 2px;
+    padding-top: 6px;
 
     span {
       font-family: 'Open Sans Semibold', 'Arial', sans-serif;
@@ -44,6 +57,11 @@
     text-align: center;
     padding: 10px;
     background: #71c9ce;
+  }
+
+  &__body {
+    flex: 1;
+    overflow-y: auto;
   }
 
   &__select-box {
@@ -154,5 +172,46 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+  }
+
+  &__empty-info {
+    text-align: center;
+  }
+
+  &__angle-arrow {
+    display: inline-block;
+    transform: scaleY(-1);
+
+    position: absolute;
+    top: 5px;
+    right: 9px;
+
+    line-height: 1;
+    font-size: 93px;
+    color: rgba(113, 201, 206, 0.2);
+  }
+
+  &__empty-notice {
+    font-family: 'Open Sans Regular', 'Arial', sans-serif;
+    text-align: center;
+    font-size: 12px;
+
+    span {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 1px solid;
+      margin-left: 4px;
+      border-radius: 5px;
+      background: #71c9ce;
+      position: relative;
+      top: 1px;
+
+      font-size: 16px;
+      font-family: 'Open Sans Semibold', 'Arial', sans-serif;
+      color: #fff;
+      line-height: 18px;
+      opacity: 0.4;
+    }
   }
 }

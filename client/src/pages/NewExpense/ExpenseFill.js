@@ -103,7 +103,7 @@ export const ExpenseFill = ({payers, amount, notPayers, setNotPayers, closeModal
         return {
           isLender: false,
           isPayer: true,
-          sum: Math.round((splitAmount) * 100) / 100,
+          sum: 0,
         }
       };
 
@@ -123,22 +123,18 @@ export const ExpenseFill = ({payers, amount, notPayers, setNotPayers, closeModal
 
   return (
     <div className="expense-fill">
-      <div className="expense-fill__header">
-        <div className="expense-fill__btn expense-fill__btn--save">
-          <button
-            onClick={saveAmount}
-          >
-            Готово
-          </button>
-        </div>
-        <div className="expense-fill__title">Укажите сумму</div>
-        <div className="expense-fill__btn expense-fill__btn--close">
-          <button
-            onClick={closeModal}
-          >
-            ×
-          </button>
-        </div>
+      <div className="header">
+        <a className="header__btn-save"
+           onClick={saveAmount}
+        >
+          <span>Сохранить</span>
+        </a>
+        <div className="header__title">Укажите сумму</div>
+        <a className="header__btn-close"
+           onClick={closeModal}
+        >
+          <span>×</span>
+        </a>
       </div>
       <div className="expense-fill__content">
         <form className="expense-fill__form">

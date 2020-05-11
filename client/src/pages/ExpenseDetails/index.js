@@ -6,7 +6,8 @@ import { AuthContext } from '../../context/AuthContext';
 import { Loader } from '../../components/Loader';
 import { List } from './list';
 import { formatDate } from "../../helpers";
-
+import { Modal } from "../../components/Modal";
+import { SettleUp } from './SettleUp'
 
 export const ExpenseDetails = () => {
   const { token } = useContext(AuthContext);
@@ -18,15 +19,24 @@ export const ExpenseDetails = () => {
   const [borrowers, setBorrowers] = useState([]);
   const [lenders, setLenders] = useState([]);
 
+  const [currentRepay, setCurrentRepay] = useState(null);
+
+  const [isPaybackModal, setIsPaybackModal] = useState(false);
+
   const getExpense = useCallback(async () => {
     try {
       const fetched = await request(`/api/expense/${expenseId}`, 'GET', null, {
         Authorization: `Bearer ${token}`
       });
 
+      if (fetched.borrowers.length === 0) {
+        history.push('/expense/list');
+        return;
+      }
+
       setExpense(fetched);
     } catch (e) {
-      history.push(`/expense/list`);
+      history.push('/expense/list');
     }
   }, [token, expenseId, request]);
 
@@ -44,19 +54,38 @@ export const ExpenseDetails = () => {
 
   }, [expense]);
 
+  const openPaybackModal = (event) => {
+    event.preventDefault();
+
+    setIsPaybackModal(true);
+  };
+
+  const closePaybackModal = (event) => {
+    event.preventDefault();
+
+    setIsPaybackModal(false);
+  };
+
+  const checkExpense = () => {
+    if (borrowers.length !== 0) {
+      return;
+    }
+
+    history.push('/expense/list');
+  };
+
   if (loading) {
     return <Loader/>;
   }
 
   return expense && (
     <div className="expense-details">
-      <div className="expense-details__header">
-        <div className="expense-details__back-btn">
-          <NavLink to="/expense/list">
-            <span>❮</span>
-          </NavLink>
-        </div>
-        <div className="expense-details__title">
+      <div className="header">
+        <NavLink className="header__btn-back"
+                 to="/expense/list">
+          <span>❮</span>
+        </NavLink>
+        <div className="header__title">
           Детали оплаты
         </div>
       </div>
@@ -74,24 +103,45 @@ export const ExpenseDetails = () => {
       <div className="expense-details__content">
         <Tabs className="expense-details__tabs">
           <TabList className="expense-details__tabs-list">
-            <Tab className="expense-details__tab">Заемщики</Tab>
-            <Tab className="expense-details__tab">Кредиторы</Tab>
+            <Tab className="expense-details__tab">Недоплатили</Tab>
+            <Tab className="expense-details__tab">Переплатили</Tab>
           </TabList>
 
           <TabPanel className="expense-details__tab-content">
             <List
               items={borrowers}
               lenders={lenders}
+              onOpenModal={openPaybackModal}
+              setCurrentRepay={setCurrentRepay}
             />
           </TabPanel>
           <TabPanel className="expense-details__tab-content">
             <List
               items={lenders}
               borrowers={borrowers}
+              onOpenModal={openPaybackModal}
+              setCurrentRepay={setCurrentRepay}
             />
           </TabPanel>
         </Tabs>
       </div>
+
+      <Modal
+        onOpen={openPaybackModal}
+        onClose={closePaybackModal}
+        onAfterCloseModal={checkExpense}
+        isOpen={isPaybackModal}
+      >
+        <SettleUp
+          expense={expense}
+          borrowers={borrowers}
+          lenders={lenders}
+          setBorrowers={setBorrowers}
+          setLenders={setLenders}
+          currentRepay={currentRepay}
+          onCloseModal={closePaybackModal}
+        />
+      </Modal>
     </div>
   );
 };

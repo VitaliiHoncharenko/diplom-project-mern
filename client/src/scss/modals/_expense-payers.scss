@@ -19,46 +19,46 @@
     width: 100%;
   }
 
-  &__header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-
-    position: relative;
-    background: #71c9ce;
-  }
-
-  &__title {
-    flex: 1;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-align: center;
-    padding: 0 10px;
-  }
-
-  &__btn {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-
-    &--close {
-      right: 0;
-      left: auto;
-
-      button {
-        font-size: 24px;
-      }
-    }
-
-    button {
-      font-family: 'Open Sans Semibold', 'Arial', sans-serif;
-      padding: 10px 15px;
-      line-height: 1;
-    }
-  }
+  //&__header {
+  //  display: flex;
+  //  justify-content: center;
+  //  align-items: center;
+  //  padding: 10px;
+  //
+  //  position: relative;
+  //  background: #71c9ce;
+  //}
+  //
+  //&__title {
+  //  flex: 1;
+  //  white-space: nowrap;
+  //  overflow: hidden;
+  //  text-overflow: ellipsis;
+  //  text-align: center;
+  //  padding: 0 10px;
+  //}
+  //
+  //&__btn {
+  //  position: absolute;
+  //  left: 0;
+  //  top: 50%;
+  //  transform: translateY(-50%);
+  //
+  //  &--close {
+  //    right: 0;
+  //    left: auto;
+  //
+  //    button {
+  //      font-size: 24px;
+  //    }
+  //  }
+  //
+  //  button {
+  //    font-family: 'Open Sans Semibold', 'Arial', sans-serif;
+  //    padding: 10px 15px;
+  //    line-height: 1;
+  //  }
+  //}
 
   &__multiple-payers {
     .expense-payers__item {

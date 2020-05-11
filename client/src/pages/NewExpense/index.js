@@ -9,6 +9,7 @@ import { ExpenseFormInput } from './ExpenseFormInput';
 import { ExpensePayersControl } from './ExpensePayersControl';
 import { ExpenseHandler } from './ExpenseHandler';
 import { ExpenseFill } from './ExpenseFill';
+import { ExpenseUnequal } from './ExpenseUnequal';
 import { NavLink } from "react-router-dom";
 
 export const NewExpense = () => {
@@ -114,6 +115,7 @@ export const NewExpense = () => {
       return {
         name: user.name,
         isLender: user.name === author,
+        sum: 0,
       };
     });
 
@@ -128,6 +130,14 @@ export const NewExpense = () => {
     const foundPayers = payers.filter((payer) => {
       return payer.isLender;
     });
+
+    // const payersQty = payers.reduce((total, payer) => {
+    //   if (payer.sum > 0) {
+    //     return total + 1;
+    //   }
+    //
+    //   return 0;
+    // }, 0);
 
     if (foundPayers.length <= 0) {
       return;
@@ -148,7 +158,7 @@ export const NewExpense = () => {
     setPayersStatus(payerStatus());
     setLendersQty(foundPayers.length);
 
-  }, [payers]);
+  }, [payers, notPayers]);
 
   const calculateSumPerPayer = (payersList) => {
     const splitAmount = +amount / payers.length;
@@ -189,18 +199,19 @@ export const NewExpense = () => {
   }
 
   return (
-    <div className="expense-create">
-      <div className="expense-create__header">
-        <div className="expense-create__back-btn">
-          <NavLink to="/expense/list">
-            <span>❮</span>
-          </NavLink>
-        </div>
-        <div className="expense-payers__title">
+    <div className="new-expense">
+      <div className="header">
+        <NavLink
+          className="header__btn-back"
+          to="/expense/list"
+        >
+          <span>❮</span>
+        </NavLink>
+        <div className="header__title">
           Выберите плательщика
         </div>
       </div>
-      <form className="expense-create__form form">
+      <form className="new-expense__form form">
         <div className="form__title">Укажите название и сумму новой оплаты:</div>
         <ExpenseFormInput
           title={title}
@@ -229,12 +240,18 @@ export const NewExpense = () => {
         isOpen={isEqualPayersModalOpen}
         onAfterCloseModal={() => setSinglePayer(true)}
       >
-        <ExpenseDetails
-          payers={payers}
+        {/*<ExpenseDetails*/}
+        {/*  payers={payers}*/}
+        {/*  amount={amount}*/}
+        {/*  isSinglePayer={isSinglePayer}*/}
+        {/*  lendersQty={lendersQty}*/}
+        {/*  setSinglePayer={setSinglePayer}*/}
+        {/*  setPayers={setPayers}*/}
+        {/*  closeModal={closeEqualPayersModal}*/}
+        {/*/>*/}
+        <ExpenseUnequal
           amount={amount}
-          isSinglePayer={isSinglePayer}
-          lendersQty={lendersQty}
-          setSinglePayer={setSinglePayer}
+          payers={payers}
           setPayers={setPayers}
           closeModal={closeEqualPayersModal}
         />
@@ -247,14 +264,14 @@ export const NewExpense = () => {
       >
         <ExpenseFill
           payers={payers}
-          amount={amount}
-          setPayers={setPayers}
           notPayers={notPayers}
-          setNotPayers={setNotPayers}
-          closeModal={closeUnequalPayersModal}
-          setSplitStatus={setSplitStatus}
+          amount={amount}
           payersAmount={payersAmount}
+          setPayers={setPayers}
+          setNotPayers={setNotPayers}
           setPayersAmount={setPayersAmount}
+          setSplitStatus={setSplitStatus}
+          closeModal={closeUnequalPayersModal}
         />
       </Modal>
     </div>

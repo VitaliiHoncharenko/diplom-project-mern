@@ -13,11 +13,26 @@ const monthNames = [
   'декабря',
 ];
 
+const monthNamesShort = [
+  'янв',
+  'фев',
+  'мар',
+  'апр',
+  'мая',
+  'июн',
+  'июл',
+  'авг',
+  'сен',
+  'окт',
+  'нояб',
+  'дек',
+];
+
 export const formatDate = (date, part = 'full') => {
   const year = `${new Date(date).getFullYear()}`;
 
-  const month = `${new Date(date).getMonth() + 1}`;
-  const formattedMonth = monthNames[month];
+  const month = new Date(date).getMonth();
+  const formattedMonth = monthNamesShort[month];
 
   const day = `${new Date(date).getDate()}`;
   // const formattedDay = day < 10 ? `0${day}` : day;

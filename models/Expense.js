@@ -8,7 +8,7 @@ const schema = new Schema({
   lenders: [{ _id: false, name: String, sum: Number }],
   createdAt: { type: Date, default: Date.now, required: true },
   updatedAt: { type: Date, default: Date.now, required: true },
-  repaid: [{ name: String, sum: Number, payBackTo: String }]
+  repaid: [{ name: String, sum: Number, payBackTo: String, createdAt: {type: Date, default: Date.now} }]
 }, { versionKey: false, timestamps: true });
 
 module.exports = model("Expense", schema);

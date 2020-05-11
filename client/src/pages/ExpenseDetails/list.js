@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Transition } from 'react-transition-group';
+import { formatMoney} from '../../helpers'
 
 const duration = 100;
 
@@ -17,22 +18,22 @@ const transitionStyles = {
   exited: { opacity: 0, height: 0 },
 };
 
-export const List = ({ items, lenders, borrowers }) => {
-  const [payersCategory, setPayersCategory] = useState([]);
+export const List = ({ items, lenders, borrowers, onOpenModal, setCurrentRepay }) => {
+  const [subCategory, setSubCategory] = useState([]);
   const [isShowInfo, setIsShowInfo] = useState([]);
   const [isBorrowers, setIsBorrowers] = useState(false);
 
 
   useEffect(() => {
     if (lenders !== undefined && lenders.length > 0) {
-      setPayersCategory([...lenders]);
-      setIsBorrowers(false);
+      setSubCategory([...lenders]);
+      setIsBorrowers(true);
       return;
     }
 
     if (borrowers !== undefined && borrowers.length > 0) {
-      setPayersCategory([...borrowers]);
-      setIsBorrowers(true);
+      setSubCategory([...borrowers]);
+      setIsBorrowers(false);
     }
 
   }, [lenders, borrowers]);
@@ -52,12 +53,39 @@ export const List = ({ items, lenders, borrowers }) => {
     setIsShowInfo([...updateShowInfoList]);
   };
 
-  const showSum = (outerItems, outerItem, subItems, subItem) => {
+  const getSum = (outerItems, outerItem, subItems, subItem) => {
     if (isBorrowers) {
-      return subItems.length > 1 ? subItem.sum / outerItems.length : null;
+      if (subItem.sum >= outerItem.sum) {
+        return;
+      }
+
+      return subItem.sum;
     }
 
-    return subItems.length > 1 ? outerItem.sum / subItems.length : null;
+    if (outerItem.sum >= subItem.sum) {
+      return subItem.sum;
+    }
+
+    return outerItem.sum;
+  };
+
+  const onPayback = (event, index, subIndex) => {
+    let currentBorrower = null;
+    let currentLender = null;
+
+    if (isBorrowers) {
+      currentBorrower = items[index];
+      currentLender = subCategory[subIndex];
+    } else {
+      currentBorrower = subCategory[subIndex];
+      currentLender = items[index];
+    }
+
+    setCurrentRepay({
+      currentBorrower,
+      currentLender,
+    });
+    onOpenModal(event);
   };
 
   return (
@@ -77,7 +105,7 @@ export const List = ({ items, lenders, borrowers }) => {
                   {item.name}
                 </div>
                 <div className="expense-details__item-sum">
-                  {item.sum}
+                  {formatMoney(item.sum)}
                 </div>
                 <div className="expense-details__btn-more">
                   <button
@@ -91,15 +119,16 @@ export const List = ({ items, lenders, borrowers }) => {
               <Transition in={isShowInfo[index]} timeout={duration}>
                 {state => (
                   <div style={{
-                        ...defaultStyle,
-                        ...transitionStyles[state]
-                      }}
+                    ...defaultStyle,
+                    ...transitionStyles[state]
+                  }}
                        className="expense-details__item-info"
                   >
-                    <div className="expense-details__sub-list-outer">{isBorrowers ? 'Кто должен:' : 'Кому вернуть:'}</div>
+                    <div
+                      className="expense-details__sub-list-outer">{isBorrowers ? 'Кому вернуть:' : 'Кто одолжил:'}</div>
                     <ul className="expense-details__sub-list">
                       {
-                        payersCategory.map((subItem, idx) => {
+                        subCategory.map((subItem, idx) => {
                           return (
                             <li
                               key={idx}
@@ -107,10 +136,15 @@ export const List = ({ items, lenders, borrowers }) => {
                             >
                               <div className="expense-details__sub-item-name">{subItem.name}</div>
                               <div className="expense-details__sub-item-sum">
-                                {showSum(items, item, payersCategory, subItem)}
+                                {getSum(items, item, subCategory, subItem)}
                               </div>
                               <div className="expense-details__btn-payback">
-                                <button className="btn btn--text">Вернуть</button>
+                                <button
+                                  className="btn btn--text"
+                                  onClick={event => onPayback(event, index, idx)}
+                                >
+                                  Расчет
+                                </button>
                               </div>
                             </li>
                           );

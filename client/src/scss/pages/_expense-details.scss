@@ -1,41 +1,41 @@
 .expense-details {
-  &__header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    position: relative;
-    background: #71c9ce;
-  }
-
-  &__back-btn {
-    a {
-      color: #313131;
-    }
-  }
-
-  &__title {
-    flex: 1 1;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-align: center;
-    padding: 0 10px;
-  }
-
-  &__back-btn {
-    a {
-      text-decoration: none;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-      padding: 0 15px;
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
-  }
+  //&__header {
+  //  display: flex;
+  //  justify-content: center;
+  //  align-items: center;
+  //  padding: 10px;
+  //  position: relative;
+  //  background: #71c9ce;
+  //}
+  //
+  //&__back-btn {
+  //  a {
+  //    color: #313131;
+  //  }
+  //}
+  //
+  //&__title {
+  //  flex: 1 1;
+  //  white-space: nowrap;
+  //  overflow: hidden;
+  //  text-overflow: ellipsis;
+  //  text-align: center;
+  //  padding: 0 10px;
+  //}
+  //
+  //&__back-btn {
+  //  a {
+  //    text-decoration: none;
+  //    display: flex;
+  //    justify-content: center;
+  //    align-items: center;
+  //    height: 100%;
+  //    padding: 0 15px;
+  //    position: absolute;
+  //    top: 0;
+  //    left: 0;
+  //  }
+  //}
 
   &__brief {
     padding: 10px;

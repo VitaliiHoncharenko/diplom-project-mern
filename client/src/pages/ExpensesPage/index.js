@@ -80,12 +80,16 @@ export const ExpensesPage = () => {
       return;
     }
 
+    const visibleExpenses = expenses.filter((expense) => {
+      return expense.borrowers.length > 0;
+    });
+
     if (currentName === 'all') {
-      setVisibleExpenses([...expenses]);
+      setVisibleExpenses([...visibleExpenses]);
       return;
     }
 
-    const expensesByName = expenses.filter((expense) => {
+    const expensesByName = visibleExpenses.filter((expense) => {
       return expense.borrowers.some((item) => item.name === currentName);
     });
 
@@ -106,7 +110,7 @@ export const ExpensesPage = () => {
     const totalDebt = expenses.reduce((total, current) => {
       return total + current.borrowers.reduce((totalDebt, currentDebt) => {
         return totalDebt + (currentName === 'all' ? currentDebt.sum : currentUserDebt(currentDebt));
-      }, 0)
+      }, 0);
     }, 0);
 
     setTotalDebt(totalDebt);
@@ -125,12 +129,18 @@ export const ExpensesPage = () => {
     <div className="expenses-page">
       <div className="expenses-page__brief">
         <div className="expenses-page__journey-title">{journey.title}</div>
-        <div className="expenses-page__journey-date">
-          Создана: <span className="date" dangerouslySetInnerHTML={{__html: formatDate(journey.createdAt)}} />
+        <div className="expenses-page__expense-info">
+          <div className="expenses-page__journey-date">
+            <span className="date" dangerouslySetInnerHTML={{ __html: formatDate(journey.createdAt) }}/>
+          </div>
+          <span className="expenses-page__separator">•</span>
+          <div className="expenses-page__users-qty">
+            <span>{userNames.length} чел</span>
+          </div>
         </div>
-        <div className="expenses-page__summary-debt">
+        {totalDebt > 0 && <div className="expenses-page__summary-debt">
           {`Сумма долга (${currentName === 'all' ? 'общая' : currentName}):`}<span>{formatMoney(totalDebt)}</span>
-        </div>
+        </div> }
       </div>
       <div className="expenses-page__header">
         <div className="expenses-page__select-box">
@@ -155,10 +165,21 @@ export const ExpensesPage = () => {
         </div>
       </div>
       <div className="expenses-page__body">
-        <List
+        {visibleExpenses.length > 0 && <List
           visibleExpenses={visibleExpenses}
           currentName={currentName}
-        />
+        />}
+
+        {visibleExpenses.length === 0 && <div className="expenses-page__empty-list">
+          <div className="expenses-page__empty-info">
+            <div className="expenses-page__empty-notice">
+              <p>Здесь отображается <br/>список ваших оплат.</p>
+              <p>Для создания новой оплаты, <br/>нажмите на <span>+</span></p>
+            </div>
+            <div className="expenses-page__angle-arrow">↴</div>
+          </div>
+
+        </div>}
       </div>
     </div>
   );

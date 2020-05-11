@@ -73,5 +73,23 @@ router.get('/:id', async (req, res) => {
   }
 })
 
+// api/expense/update
+router.post("/update/:id", auth, async (req, res) => {
+    try {
+
+
+      // const { journey } = await User.findOne({ _id: req.user.userId });
+      const expense = await Expense.findOne({ _id: req.params.id })
+
+      const { borrowers, lenders, repaid } = req.body;
+
+      await Expense.findOneAndUpdate({ _id: req.params.id }, {borrowers, lenders, repaid: {...expense.repaid, ...repaid} })
+
+      res.status(201).json({ message: "test" });
+    } catch (e) {
+      res.status(500).json({ message: e });
+    }
+  });
+
 
 module.exports = router;

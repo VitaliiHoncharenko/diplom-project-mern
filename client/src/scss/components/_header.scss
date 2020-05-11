@@ -1,0 +1,77 @@
+/**
+  Component markup
+
+***
+  <div className="header">
+    <a className="header__btn-save">
+      <span>Сохранить</span>
+    </a>
+    <div className="header__title">Укажите сумму</div>
+    <a className="header__btn-close">
+      <span>×</span>
+    </a>
+  </div>
+ */
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  position: relative;
+  background: #71c9ce;
+
+  &__title {
+    flex: 1 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    padding: 0 50px;
+  }
+
+  &__btn-back {
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 0 15px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #313131;
+  }
+
+  &__btn-close {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 12px;
+    height: 100%;
+
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    font-family: 'Open Sans Semibold', 'Arial', sans-serif;
+    font-size: 24px;
+    line-height: 1;
+  }
+
+  &__btn-save {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 8px;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+
+    font-family: 'Open Sans Semibold', 'Arial', sans-serif;
+    font-size: 12px;
+    line-height: 1;
+  }
+}

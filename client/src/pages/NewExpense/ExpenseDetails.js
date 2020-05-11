@@ -167,22 +167,18 @@ export const ExpenseDetails = ({isSinglePayer, lendersQty, closeModal, payers, s
               }}
           >
             <div className="expense-payers__multiple-payers">
-            <div className="expense-payers__header">
-              <div className="expense-payers__btn expense-payers__btn--back">
-                <button
-                  onClick={() => setSinglePayer(true)}
-                >
-                  ❮
-                </button>
-              </div>
-              <div className="expense-payers__title">Выбрать нескольких</div>
-              <div className="expense-payers__btn expense-payers__btn--close">
-                <button
-                  onClick={closeModal}
-                >
-                  ×
-                </button>
-              </div>
+            <div className="header">
+              <a className="header__btn-back"
+                 onClick={() => setSinglePayer(true)}
+              >
+                <span>❮</span>
+              </a>
+              <div className="header__title">Выбрать нескольких</div>
+              <a className="header__btn-close"
+                 onClick={closeModal}
+              >
+                <span>×</span>
+              </a>
             </div>
             <div className="expense-payers__content">
               <div className="expense-payers__list">

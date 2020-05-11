@@ -1,9 +1,15 @@
 @import './normalize';
 @import '~react-toastify/dist/ReactToastify.css';
+//@import '~bootstrap/dist/css/bootstrap.min.css';
 @import './base';
 @import './body';
 @import './buttons';
 @import './form';
+
+@import './components/header';
+@import './components/input';
+@import './components/modal';
+
 @import './notification';
 @import './app';
 @import './app-modal';
@@ -11,8 +17,12 @@
 @import './pages/add-name';
 @import './pages/journey-create';
 @import './pages/journey-details';
-@import './pages/expense-create';
+@import './pages/new-expense';
 @import './pages/expense-details';
 @import './pages/expenses-page';
 @import './modals/expense-payers';
 @import './modals/expense-fill';
+@import './modals/settle-up';
+@import './modals/expense-unequal';
+
+
