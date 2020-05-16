@@ -19,7 +19,14 @@ export const AuthPage = () => {
   }, [error, message, clearError]);
 
   const changeHandler = event => {
-    setForm({ ...form, [event.target.name]: event.target.value });
+    const { name, value } = event.target;
+
+    if (name === 'email') {
+      setForm({ ...form, [name]: value.toLowerCase() });
+      return;
+    }
+
+    setForm({ ...form, [name]: value });
   };
 
   const registerHandler = async () => {

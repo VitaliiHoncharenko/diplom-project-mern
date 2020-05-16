@@ -11,14 +11,14 @@ export const ExpenseHandler = ({payers, title, amount}) => {
   const history = useHistory();
 
   const onHandler = async () => {
-    const expenseUsers = payers.reduce((payersGroup, {name, sum, isLender}) => {
+    const expenseUsers = payers.reduce((payersGroup, {name, sum, isLender, personalLender}) => {
       const type = isLender === true ? 'lenders' : 'borrowers';
 
       if (sum === 0) {
         return payersGroup;
       }
 
-      payersGroup[type] = [...payersGroup[type], {name, sum}];
+      payersGroup[type] = [...payersGroup[type], {name, sum, to: (isLender ? null : personalLender)}];
 
       return payersGroup;
     }, {

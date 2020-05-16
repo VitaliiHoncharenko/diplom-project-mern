@@ -100,7 +100,6 @@ export const ExpensesPage = () => {
 
     setVisibleExpenses([...expensesByName]);
 
-
   }, [expenses, currentName]);
 
   useEffect(() => {

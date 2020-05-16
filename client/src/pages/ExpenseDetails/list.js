@@ -54,6 +54,22 @@ export const List = ({ items, lenders, borrowers, onOpenModal, setCurrentRepay }
   };
 
   const getSum = (outerItems, outerItem, subItems, subItem) => {
+    if (outerItem.to !== undefined ) {
+      if (isBorrowers) {
+        if (outerItem.to[subItem.name] !== undefined) {
+          return outerItem.to[subItem.name];
+        }
+
+        return 0;
+      }
+
+      if (subItem.to[outerItem.name] !== undefined) {
+        return subItem.to[outerItem.name];
+      }
+
+      return 0;
+    }
+
     if (isBorrowers) {
       if (subItem.sum >= outerItem.sum) {
         return;
@@ -129,7 +145,7 @@ export const List = ({ items, lenders, borrowers, onOpenModal, setCurrentRepay }
                     <ul className="expense-details__sub-list">
                       {
                         subCategory.map((subItem, idx) => {
-                          return (
+                          return getSum(items, item, subCategory, subItem) !== 0 && (
                             <li
                               key={idx}
                               className="expense-details__sub-item"

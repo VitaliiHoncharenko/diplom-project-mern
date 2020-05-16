@@ -237,7 +237,6 @@ export const ExpenseUnequal = ({ amount, payers, setPayers, closeModal }) => {
   };
 
   const onSaveLenderSum = () => {
-
     const lenderAndPrice = {};
     let currentLenderInfo = null;
 
@@ -254,10 +253,6 @@ export const ExpenseUnequal = ({ amount, payers, setPayers, closeModal }) => {
       }
     });
 
-    debugger
-
-
-    // if (Object.keys(lenderAndPrice).length !== 0) {
     const diff = +currentLenderInfo.paySum - +currentLenderInfo.billSum;
 
     if (diff < +lenderSum) {
@@ -269,7 +264,6 @@ export const ExpenseUnequal = ({ amount, payers, setPayers, closeModal }) => {
       alert('Заемщику уже дал взаймы другому пользователю.');
       return;
     }
-    // }
 
     const formatLenderInfo = {
       [currentLoaner]: { [currentLender]: lenderSum }
@@ -394,8 +388,6 @@ export const ExpenseUnequal = ({ amount, payers, setPayers, closeModal }) => {
     const newPayersList = state.unequalPayers;
 
     newPayersList.forEach((payer) => {
-      debugger
-
       if (+payer.billSum > +payer.paySum) {
 
         const totalLenderSum = Object.keys(payer.personalLender).reduce((total, current) => {

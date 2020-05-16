@@ -2,32 +2,6 @@
   height: 100%;
   padding: 0;
 
-  //&__header {
-  //  display: flex;
-  //  justify-content: center;
-  //  align-items: center;
-  //  padding: 10px;
-  //  position: relative;
-  //  background: #71c9ce;
-  //}
-  //
-  //&__back-btn {
-  //  a {
-  //    text-decoration: none;
-  //    display: flex;
-  //    justify-content: center;
-  //    align-items: center;
-  //    height: 100%;
-  //    padding: 0 15px;
-  //
-  //    position: absolute;
-  //    top: 0;
-  //    left: 0;
-  //
-  //    color: #313131;
-  //  }
-  //}
-
   &__content {
     display: flex;
     flex-direction: column;
@@ -40,23 +14,16 @@
     background: none;
   }
 
-  //&__title {
-  //  font-family: "Pacifico Regular", 'Arial', serif;
-  //  text-align: center;
-  //  font-size: 40px;
-  //  font-weight: normal;
-  //  color: #71c9ce;
-  //  text-shadow: 1px 1px 0 rgb(140, 138, 102);
-  //  padding: 0 20px;
-  //}
-
   &__status-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
     line-height: 30px;
     margin-top: 20px;
   }
 
   &__text-btn {
-    margin: 0 5px;
     font-family: 'Open Sans Semibold', 'Arial', sans-serif;
     min-width: 100px;
   }
@@ -64,15 +31,64 @@
   &__block {
     display: flex;
     align-items: center;
+    position: relative;
 
-    & + & {
-      border-top: 1px solid #71c9ce;
-      margin-top: 5px;
-      padding-top: 5px;
+    .tooltip {
+      position: static;
+      margin-left: 5px;
     }
+  }
+
+  &__or {
+    flex: 1;
+    position: relative;
+    font-size: 12px;
+    text-align: center;
+    margin: 0 10px;
 
     span {
-      flex: 1;
+      background: #cbf1f5;
+      position: relative;
+      display: inline-block;
+      z-index: 1;
+      padding: 0 8px;
+    }
+
+    &:after {
+      content: "";
+      height: 0;
+      display: block;
+      border-top: 1px solid rgba(49, 49, 49, 0.3);
+      position: absolute;
+      width: 100%;
+      top: 16px;
+    }
+  }
+}
+
+@media only screen and (max-device-width: 400px) {
+  .new-expense__status-info {
+    flex-wrap: wrap;
+  }
+
+  .new-expense__block {
+    display: block;
+    text-align: center;
+    width: 100%;
+  }
+
+  .new-expense__or {
+    display: block;
+    flex-basis: 100%;
+    margin: 0;
+
+    text-align: center;
+  }
+
+  .new-expense__block {
+    .tooltip {
+      position: absolute;
+      right: 0;
     }
   }
 }

@@ -1,34 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-export const ExpenseFill = ({payers, amount, notPayers, setNotPayers, closeModal, setPayers, setSplitStatus, payersAmount, setPayersAmount}) => {
+export const ExpenseFill = ({payers, amount, notPayers, setNotPayers, closeModal, setPayers, payersAmount, setPayersAmount}) => {
   const [enteredAmount, setEnteredAmount] = useState(0);
-
-  useEffect(() => {
-    if (Object.keys(payersAmount).length <= 0) {
-      return;
-    }
-
-    const checkSplitStatus = () => {
-      let savedSum = 0;
-      let defaultText = 'Поровну';
-
-      payers.forEach((payer, index) => {
-        if (index === 0) {
-          savedSum = payer.sum;
-        }
-
-        if ( savedSum === payer.sum) {
-          return;
-        }
-
-        defaultText = 'Не поровну';
-      });
-
-      return defaultText;
-    };
-
-    setSplitStatus(checkSplitStatus());
-  }, [payers]);
 
   useEffect(() => {
     const sum = Object.keys(payersAmount).reduce((acc, current) => acc + payersAmount[current], 0);

@@ -153,10 +153,6 @@ export const ExpenseUnequal = ({ amount, payers, closeModal }) => {
     // });
   };
 
-  const onDataSave = () => {
-    debugger
-  };
-
   const isOptionAdd = (payer, user) => {
     if (+payData[user.name] <= +billData[user.name]) {
       return false;

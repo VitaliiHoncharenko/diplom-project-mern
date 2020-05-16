@@ -22,8 +22,6 @@ export const NewExpense = () => {
   const [isUnequalPayersModalOpen, setIsUnequalPayersModalOpen] = useState(false);
 
   const [payers, setPayers] = useState([]);
-  const [payersStatus, setPayersStatus] = useState('');
-  const [splitStatus, setSplitStatus] = useState('Поровну');
   const [lendersQty, setLendersQty] = useState(0);
   const [payersAmount, setPayersAmount] = useState({});
   const [notPayers, setNotPayers] = useState({});
@@ -91,7 +89,7 @@ export const NewExpense = () => {
 
     if (authorData) {
       setAuthor(authorData.name);
-      setPayersStatus(authorData.name);
+      // setPayersStatus(authorData.name);
     }
 
   }, [users]);
@@ -143,19 +141,19 @@ export const NewExpense = () => {
       return;
     }
 
-    const payerStatus = () => {
-      if (foundPayers.length > 1) {
-        return `${foundPayers.length} чел.`;
-      }
+    // const payerStatus = () => {
+    //   if (foundPayers.length > 1) {
+    //     return `${foundPayers.length} чел.`;
+    //   }
+    //
+    //   if (foundPayers[0].name === author) {
+    //     return `${foundPayers[0].name}(Вы)`;
+    //   }
+    //
+    //   return foundPayers[0].name;
+    // };
 
-      if (foundPayers[0].name === author) {
-        return `${foundPayers[0].name}(Вы)`;
-      }
-
-      return foundPayers[0].name;
-    };
-
-    setPayersStatus(payerStatus());
+    // setPayersStatus(payerStatus());
     setLendersQty(foundPayers.length);
 
   }, [payers, notPayers]);
@@ -223,8 +221,6 @@ export const NewExpense = () => {
         <ExpensePayersControl
           openEqualPayersModal={openEqualPayersModal}
           openUnequalPayersModal={openUnequalPayersModal}
-          payersStatus={payersStatus}
-          splitStatus={splitStatus}
         />
 
         <ExpenseHandler
@@ -240,15 +236,6 @@ export const NewExpense = () => {
         isOpen={isEqualPayersModalOpen}
         onAfterCloseModal={() => setSinglePayer(true)}
       >
-        {/*<ExpenseDetails*/}
-        {/*  payers={payers}*/}
-        {/*  amount={amount}*/}
-        {/*  isSinglePayer={isSinglePayer}*/}
-        {/*  lendersQty={lendersQty}*/}
-        {/*  setSinglePayer={setSinglePayer}*/}
-        {/*  setPayers={setPayers}*/}
-        {/*  closeModal={closeEqualPayersModal}*/}
-        {/*/>*/}
         <ExpenseUnequal
           amount={amount}
           payers={payers}
@@ -270,7 +257,6 @@ export const NewExpense = () => {
           setPayers={setPayers}
           setNotPayers={setNotPayers}
           setPayersAmount={setPayersAmount}
-          setSplitStatus={setSplitStatus}
           closeModal={closeUnequalPayersModal}
         />
       </Modal>
