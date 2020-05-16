@@ -32,12 +32,12 @@ router.post("/create", [auth, check("title", "Минимальная длина 
     }
 
     const { title } = req.body;
+    const { name, _id } = await User.findOne({ _id: req.user.userId });
 
-    const journeyTitle = new Journey({ title });
+    const journeyInfo = new Journey({ title, author: name, authorId: _id });
 
-    const j = await journeyTitle.save();
-
-    await User.findOneAndUpdate({ _id: req.user.userId }, { journey: j._id });
+    const journey = await journeyInfo.save();
+    await User.findOneAndUpdate({ _id: req.user.userId }, { journey: journey._id });
 
     res.status(201).json({ message: "Приключение сохранено" });
   } catch (e) {
@@ -52,8 +52,6 @@ router.post("/users/add",
   async (req, res) => {
   try {
     const { users } = req.body;
-
-    console.log('users', users)
 
     if (users.length <= 0) {
       return res.status(400).json({ message: 'Добавьте имена пользователей в группе' });

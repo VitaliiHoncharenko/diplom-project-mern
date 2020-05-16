@@ -21,7 +21,6 @@ export const JourneyDetails = () => {
         Authorization: `Bearer ${token}`
       });
 
-      // setUsers([...users, fetched]);
       setAuthor(fetched);
 
     } catch (e) {
@@ -115,7 +114,7 @@ export const JourneyDetails = () => {
                   className="form__btn form__btn--white "
                   onClick={e => addUser(e)}
                 >
-                  Добавить
+                  Добавить пользователя
                 </button>
               </div>
               <div className="form__btn-row">
@@ -124,7 +123,7 @@ export const JourneyDetails = () => {
                   onClick={e => saveGroup(e)}
                   disabled={users.length <= 0}
                 >
-                  Сохранить
+                  Сохранить группу
                 </button>
               </div>
             </div>

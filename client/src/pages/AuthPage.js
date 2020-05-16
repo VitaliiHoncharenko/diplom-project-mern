@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useHttp } from "../hooks/http.hook";
-import { useMessage } from "../hooks/message.hook";
-import { AuthContext } from "../context/AuthContext";
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import { List } from './ExpenseDetails/list';
+import React, { useContext, useEffect, useState } from 'react';
+import { useHttp } from '../hooks/http.hook';
+import { useMessage } from '../hooks/message.hook';
+import { AuthContext } from '../context/AuthContext';
+import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 
 export const AuthPage = () => {
   const auth = useContext(AuthContext);
@@ -11,7 +10,7 @@ export const AuthPage = () => {
 
   const { loading, request, error, clearError } = useHttp();
   const [form, setForm] = useState({
-    email: "", password: "", name: ""
+    name: '', email: '', password: '', password2: ''
   });
 
   useEffect(() => {
@@ -25,7 +24,7 @@ export const AuthPage = () => {
 
   const registerHandler = async () => {
     try {
-      const data = await request("/api/auth/register", "POST", { ...form });
+      const data = await request('/api/auth/register', 'POST', { ...form });
       message(data.message);
       await loginHandler();
     } catch (e) {
@@ -34,7 +33,7 @@ export const AuthPage = () => {
 
   const loginHandler = async () => {
     try {
-      const data = await request("/api/auth/login", "POST", { ...form });
+      const data = await request('/api/auth/login', 'POST', { ...form });
       auth.login(data.token, data.userId);
     } catch (e) {
     }
@@ -62,8 +61,8 @@ export const AuthPage = () => {
                     type="email"
                     name="email"
                     className="form__input"
-                    value={ form.email }
-                    onChange={ changeHandler }
+                    value={form.email}
+                    onChange={changeHandler}
                   />
                   <label htmlFor="email" className="form__label">Email</label>
                 </div>
@@ -75,8 +74,8 @@ export const AuthPage = () => {
                     type="password"
                     name="password"
                     className="form__input"
-                    value={ form.password }
-                    onChange={ changeHandler }
+                    value={form.password}
+                    onChange={changeHandler}
                   />
                   <label htmlFor="email" className="form__label">Пароль</label>
                 </div>
@@ -84,8 +83,8 @@ export const AuthPage = () => {
                   <div className="form__btn-row">
                     <button
                       className="btn form__btn"
-                      disabled={ loading }
-                      onClick={ loginHandler }
+                      disabled={loading}
+                      onClick={loginHandler}
                     >
                       Войти
                     </button>
@@ -102,7 +101,7 @@ export const AuthPage = () => {
                     placeholder=" "
                     type="text"
                     name="name"
-                    value={ form.name }
+                    value={form.name}
                     onChange={changeHandler}
                   />
                   <label className="form__label">
@@ -117,8 +116,8 @@ export const AuthPage = () => {
                     type="email"
                     name="email"
                     className="form__input"
-                    value={ form.email }
-                    onChange={ changeHandler }
+                    value={form.email}
+                    onChange={changeHandler}
                   />
                   <label htmlFor="email" className="form__label">Email</label>
                 </div>
@@ -130,8 +129,8 @@ export const AuthPage = () => {
                     type="password"
                     name="password"
                     className="form__input"
-                    value={ form.password }
-                    onChange={ changeHandler }
+                    value={form.password}
+                    onChange={changeHandler}
                   />
                   <label htmlFor="password" className="form__label">Пароль</label>
                 </div>
@@ -142,6 +141,8 @@ export const AuthPage = () => {
                     type="password"
                     name="password2"
                     className="form__input"
+                    value={form.password2}
+                    onChange={changeHandler}
                   />
                   <label htmlFor="password2" className="form__label">Повторите пароль</label>
                 </div>
@@ -149,8 +150,8 @@ export const AuthPage = () => {
                   <div className="form__btn-row">
                     <button
                       className="btn form__btn"
-                      onClick={ registerHandler }
-                      disabled={ loading }
+                      onClick={registerHandler}
+                      disabled={loading}
                     >
                       Регистрация
                     </button>

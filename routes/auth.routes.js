@@ -11,22 +11,30 @@ const auth = require("../middleware/auth.middleware");
 router.post(
   "/register",
   [
+    check("name", "Укажите корректное имя. Минимум 2 символа").isLength({ min: 2 }),
     check("email", "Некорректный email").isEmail(),
     check("password", "Минимальная длина пароля 6 символов").isLength({ min: 6 }),
-    check("name", "Минимальная длина пароля 2 символа").isLength({ min: 2 }),
+    check("password2", "Повторный пароль также не менее 6 символов").isLength({ min: 6 }),
   ],
   async (req, res) => {
     try {
-      const errors = validationResult(req);
+      const result = validationResult(req);
 
-      if (!errors.isEmpty()) {
+      if (!result.isEmpty()) {
         return res.status(400).json({
-          errors: errors.array(),
-          message: "Некорректный данные при регистрации",
+          errors: result.array(),
+          message: result.errors[0].msg,
         });
       }
 
-      const { email, password, name } = req.body;
+      const { name, email, password, password2 } = req.body;
+
+      if (password !== password2) {
+        return res.status(400).json({
+          errors: result.array(),
+          message: 'Пароли не совпадают',
+        });
+      }
 
       const candidate = await User.findOne({ email });
 
@@ -55,14 +63,11 @@ router.post(
   ],
   async (req, res) => {
     try {
-      const errors = validationResult(req);
+      const result = validationResult(req);
 
-      console.log('errors' , errors)
-
-
-      if (!errors.isEmpty()) {
+      if (!result.isEmpty()) {
         return res.status(400).json({
-          errors: errors.array(),
+          errors: result.array(),
           message: "Некорректный данные при входе в систему",
         });
       }

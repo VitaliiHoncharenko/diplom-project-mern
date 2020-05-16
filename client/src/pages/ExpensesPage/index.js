@@ -47,7 +47,7 @@ export const ExpensesPage = () => {
       setUserNames([...userNamesList]);
 
     } catch (e) {
-      message(e.message, 'error');
+      history.push(`/journey`);
     }
   }, [token, request]);
 
