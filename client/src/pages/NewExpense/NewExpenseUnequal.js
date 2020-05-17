@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 import Modal from 'react-bootstrap/Modal'
 
-export const ExpenseUnequal = ({ amount, payers, setPayers, closeModal }) => {
+export const NewExpenseUnequal = ({ amount, payers, setPayers, closeModal }) => {
   const [state, setState] = useState({
     unequalPayers: [],
     totalBillAmount: 0,

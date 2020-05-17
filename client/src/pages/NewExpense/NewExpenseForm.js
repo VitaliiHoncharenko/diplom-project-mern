@@ -1,6 +1,6 @@
 import React from "react";
 
-export const ExpenseFormInput = ({onChangeTitle, title, onChangeAmount, amount}) => {
+export const NewExpenseForm = ({onChangeTitle, title, onChangeAmount, amount}) => {
 
   return (
     <div className="form__group">

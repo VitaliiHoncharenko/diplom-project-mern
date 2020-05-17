@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-export const ExpenseFill = ({payers, amount, notPayers, setNotPayers, closeModal, setPayers, payersAmount, setPayersAmount}) => {
+export const NewExpenseEqual = ({payers, amount, notPayers, setNotPayers, closeModal, setPayers, payersAmount, setPayersAmount}) => {
   const [enteredAmount, setEnteredAmount] = useState(0);
 
   useEffect(() => {
@@ -109,6 +109,18 @@ export const ExpenseFill = ({payers, amount, notPayers, setNotPayers, closeModal
           <span>×</span>
         </a>
       </div>
+      <div className="expense-fill__footer">
+        <div className="expense-fill__calculation">
+          <div>{enteredAmount} из <span>{amount}</span></div>
+          <div>
+            Осталось:
+            <span
+              className={enteredAmount <= amount ? 'expense-fill__correct' : 'expense-fill__wrong'}>
+                      {` ${amount - enteredAmount}`}
+                    </span>
+          </div>
+        </div>
+      </div>
       <div className="expense-fill__content">
         <form className="expense-fill__form">
           {
@@ -140,18 +152,6 @@ export const ExpenseFill = ({payers, amount, notPayers, setNotPayers, closeModal
               </div>
             )}
         </form>
-        <div className="expense-fill__footer">
-          <div className="expense-fill__calculation">
-            <div>{enteredAmount} из <span>{amount}</span></div>
-            <div>
-              Осталось:
-              <span
-                className={enteredAmount <= amount ? 'expense-fill__correct' : 'expense-fill__wrong'}>
-                      {` ${amount - enteredAmount}`}
-                    </span>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   )

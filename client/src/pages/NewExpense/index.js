@@ -4,12 +4,11 @@ import { AuthContext } from '../../context/AuthContext';
 import { useMessage } from '../../hooks/message.hook';
 import { Loader } from "../../components/Loader";
 import { Modal } from '../../components/Modal';
-import { ExpenseDetails } from './ExpenseDetails';
-import { ExpenseFormInput } from './ExpenseFormInput';
-import { ExpensePayersControl } from './ExpensePayersControl';
-import { ExpenseHandler } from './ExpenseHandler';
-import { ExpenseFill } from './ExpenseFill';
-import { ExpenseUnequal } from './ExpenseUnequal';
+import { NewExpenseForm } from './NewExpenseForm';
+import { NewExpenseControls } from './NewExpenseControls';
+import { NewExpenseHandlerData } from './NewExpenseHandlerData';
+import { NewExpenseEqual } from './NewExpenseEqual';
+import { NewExpenseUnequal } from './NewExpenseUnequal';
 import { NavLink } from "react-router-dom";
 
 export const NewExpense = () => {
@@ -22,11 +21,11 @@ export const NewExpense = () => {
   const [isUnequalPayersModalOpen, setIsUnequalPayersModalOpen] = useState(false);
 
   const [payers, setPayers] = useState([]);
-  const [lendersQty, setLendersQty] = useState(0);
+  // const [lendersQty, setLendersQty] = useState(0);
   const [payersAmount, setPayersAmount] = useState({});
   const [notPayers, setNotPayers] = useState({});
 
-  const [isSinglePayer, setSinglePayer] = useState(true);
+  // const [isSinglePayer, setSinglePayer] = useState(true);
 
   const { request, loading } = useHttp();
   const { token, userId } = useContext(AuthContext);
@@ -89,7 +88,6 @@ export const NewExpense = () => {
 
     if (authorData) {
       setAuthor(authorData.name);
-      // setPayersStatus(authorData.name);
     }
 
   }, [users]);
@@ -120,43 +118,22 @@ export const NewExpense = () => {
     setPayers([...payersList]);
   }, [users, author]);
 
-  useEffect(() => {
-    if (payers.length <= 0) {
-      return;
-    }
-
-    const foundPayers = payers.filter((payer) => {
-      return payer.isLender;
-    });
-
-    // const payersQty = payers.reduce((total, payer) => {
-    //   if (payer.sum > 0) {
-    //     return total + 1;
-    //   }
-    //
-    //   return 0;
-    // }, 0);
-
-    if (foundPayers.length <= 0) {
-      return;
-    }
-
-    // const payerStatus = () => {
-    //   if (foundPayers.length > 1) {
-    //     return `${foundPayers.length} чел.`;
-    //   }
-    //
-    //   if (foundPayers[0].name === author) {
-    //     return `${foundPayers[0].name}(Вы)`;
-    //   }
-    //
-    //   return foundPayers[0].name;
-    // };
-
-    // setPayersStatus(payerStatus());
-    setLendersQty(foundPayers.length);
-
-  }, [payers, notPayers]);
+  // useEffect(() => {
+  //   if (payers.length <= 0) {
+  //     return;
+  //   }
+  //
+  //   const foundPayers = payers.filter((payer) => {
+  //     return payer.isLender;
+  //   });
+  //
+  //   if (foundPayers.length <= 0) {
+  //     return;
+  //   }
+  //
+  //   setLendersQty(foundPayers.length);
+  //
+  // }, [payers, notPayers]);
 
   const calculateSumPerPayer = (payersList) => {
     const splitAmount = +amount / payers.length;
@@ -211,19 +188,19 @@ export const NewExpense = () => {
       </div>
       <form className="new-expense__form form">
         <div className="form__title">Укажите название и сумму новой оплаты:</div>
-        <ExpenseFormInput
+        <NewExpenseForm
           title={title}
           amount={amount}
           onChangeTitle={e => setTitle(e.target.value)}
           onChangeAmount={e => setAmount(e.target.value)}
         />
 
-        <ExpensePayersControl
+        <NewExpenseControls
           openEqualPayersModal={openEqualPayersModal}
           openUnequalPayersModal={openUnequalPayersModal}
         />
 
-        <ExpenseHandler
+        <NewExpenseHandlerData
           payers={payers}
           title={title}
           amount={amount}
@@ -234,9 +211,8 @@ export const NewExpense = () => {
         onOpen={openEqualPayersModal}
         onClose={closeEqualPayersModal}
         isOpen={isEqualPayersModalOpen}
-        onAfterCloseModal={() => setSinglePayer(true)}
       >
-        <ExpenseUnequal
+        <NewExpenseUnequal
           amount={amount}
           payers={payers}
           setPayers={setPayers}
@@ -249,7 +225,7 @@ export const NewExpense = () => {
         onClose={closeUnequalPayersModal}
         isOpen={isUnequalPayersModalOpen}
       >
-        <ExpenseFill
+        <NewExpenseEqual
           payers={payers}
           notPayers={notPayers}
           amount={amount}

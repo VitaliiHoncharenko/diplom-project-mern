@@ -27,7 +27,7 @@ const transitionStylesMultiPayer = {
   exited:   { transform: 'translateX(100%)' },
 };
 
-export const ExpenseDetails = ({isSinglePayer, lendersQty, closeModal, payers, setSinglePayer, setPayers, amount}) => {
+export const _old_ExpenseDetails = ({isSinglePayer, lendersQty, closeModal, payers, setSinglePayer, setPayers, amount}) => {
   const splitPayers = (group, payer) => {
     const type = payer.isLender === true ? 'lenders' : 'borrowers';
 

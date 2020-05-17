@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export const ExpensePayersControl = ({ openEqualPayersModal, openUnequalPayersModal }) => {
+export const NewExpenseControls = ({ openEqualPayersModal, openUnequalPayersModal }) => {
   const [isShowEqualTooltip, setIsShowEqualTooltip] = useState(false);
   const [isShowUnequalTooltip, setIsShowUnequalTooltip] = useState(false);
   const [timerId, setTimerId] = useState(0);
@@ -39,26 +39,9 @@ export const ExpensePayersControl = ({ openEqualPayersModal, openUnequalPayersMo
       <div className="new-expense__block">
         <button
           className="btn btn--text new-expense__text-btn"
-          onClick={openEqualPayersModal}
-        >
-          <span>Поровну</span>
-        </button>
-        <span className="tooltip"
-              onClick={onEqualTooltipShow}
-        >
-          <i>?</i>
-          {isShowEqualTooltip && <span className="tooltip__text">
-            Подходит при одинаковой сумме для каждого участника (кино, музей, билеты на транспорт...)
-          </span>}
-        </span>
-      </div>
-      <span className="new-expense__or"><span>или</span></span>
-      <div className="new-expense__block">
-        <button
-          className="btn btn--text new-expense__text-btn"
           onClick={openUnequalPayersModal}
         >
-          <span>Непоровну</span>
+          <span>Поровну</span>
         </button>
         <span className="tooltip"
               onClick={onUnequalTooltipShow}
@@ -66,6 +49,23 @@ export const ExpensePayersControl = ({ openEqualPayersModal, openUnequalPayersMo
           <i>?</i>
           {isShowUnequalTooltip && <span className="tooltip__text">
             Подходит при разной сумме для каждого участника (кафе, магазин, бар...)
+          </span>}
+        </span>
+      </div>
+      <span className="new-expense__or"><span>или</span></span>
+      <div className="new-expense__block">
+        <button
+          className="btn btn--text new-expense__text-btn"
+          onClick={openEqualPayersModal}
+        >
+          <span>Непоровну</span>
+        </button>
+        <span className="tooltip"
+              onClick={onEqualTooltipShow}
+        >
+          <i>?</i>
+          {isShowEqualTooltip && <span className="tooltip__text">
+            Подходит при одинаковой сумме для каждого участника (кино, музей, билеты на транспорт...)
           </span>}
         </span>
       </div>

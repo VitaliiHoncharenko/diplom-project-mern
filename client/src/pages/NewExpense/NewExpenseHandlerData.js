@@ -4,13 +4,15 @@ import { useHttp } from '../../hooks/http.hook';
 import { useMessage } from '../../hooks/message.hook';
 import { AuthContext } from '../../context/AuthContext';
 
-export const ExpenseHandler = ({payers, title, amount}) => {
+export const NewExpenseHandlerData = ({payers, title, amount}) => {
   const { request } = useHttp();
   const message = useMessage();
   const { token } = useContext(AuthContext);
   const history = useHistory();
 
-  const onHandler = async () => {
+  const onHandler = async (event) => {
+    event.preventDefault();
+
     const expenseUsers = payers.reduce((payersGroup, {name, sum, isLender, personalLender}) => {
       const type = isLender === true ? 'lenders' : 'borrowers';
 
@@ -18,7 +20,11 @@ export const ExpenseHandler = ({payers, title, amount}) => {
         return payersGroup;
       }
 
-      payersGroup[type] = [...payersGroup[type], {name, sum, to: (isLender ? null : personalLender)}];
+      if (personalLender === undefined) {
+        payersGroup[type] = [...payersGroup[type], {name, sum}];
+      } else {
+        payersGroup[type] = [...payersGroup[type], {name, sum, to: (isLender ? null : personalLender)}];
+      }
 
       return payersGroup;
     }, {

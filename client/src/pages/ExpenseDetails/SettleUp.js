@@ -37,7 +37,12 @@ export const SettleUp = ({ borrowers, lenders, setBorrowers, setLenders, current
     const inputValue = +settleUpInput.current.value;
 
     if (+inputValue > +borrower.sum) {
-      alert(`Введенная сумма больше требуемой - ${borrower.sum}`)
+      alert(`Введенная сумма больше требуемой - ${borrower.sum}`);
+      return;
+    }
+
+    if (+inputValue > +lender.sum) {
+      alert(`Вы возвращаете больше чем нужно. Общая сумма долга- ${lender.sum}`);
       return;
     }
 
